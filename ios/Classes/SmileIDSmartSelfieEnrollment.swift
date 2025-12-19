@@ -28,7 +28,8 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
             allowNewEnroll: args["allowNewEnroll"] as? Bool ?? false,
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
             showAttribution: args["showAttribution"] as? Bool ?? true,
-            showInstructions: args["showInstructions"] as? Bool ?? true,
+            showInstructions: args["showInstructions"] as? Bool ?? true
+            smileSensitivity: SmileSensitivity.from(args["smileSensitivity"] as? String),
             skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self

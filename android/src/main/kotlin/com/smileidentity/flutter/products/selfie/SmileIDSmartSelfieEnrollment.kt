@@ -6,6 +6,7 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.SmartSelfieEnrollment
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.flutter.views.SmileSelfieComposablePlatformView
+import com.smileidentity.models.SmileSensitivity
 import com.smileidentity.util.randomUserId
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.platform.PlatformViewFactory
@@ -34,6 +35,9 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
     @Composable
     override fun Content(args: Map<String, Any?>) {
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
+        val smileSensitivity = (args["smileSensitivity"] as? String)?.lowercase()?.let { input ->
+            SmileSensitivity.entries.firstOrNull { it.name.lowercase() == input }
+        } ?: SmileSensitivity.NORMAL
         SmileID.SmartSelfieEnrollment(
             userId = args["userId"] as? String ?: randomUserId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
@@ -41,6 +45,7 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
+            smileSensitivity = smileSensitivity,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
             onResult = { res -> handleResult(res) },
         )

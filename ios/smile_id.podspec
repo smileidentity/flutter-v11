@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'SmileID', '11.1.3'
+  s.dependency 'SmileID', '11.1.4'
   # for development alongside sample/ios/Podfile uncomment the version and specify
   # tag or branch in sample/ios/Podfile
   # s.dependency "SmileID"

@@ -3,3 +3,8 @@ enum AutoCaptureMode {
   autoCaptureOnly,
   manualCaptureOnly,
 }
+
+enum SmileSensitivity {
+  normal,
+  relaxed,
+}

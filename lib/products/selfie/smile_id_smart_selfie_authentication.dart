@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../views/smile_view.dart';
+import '../models/model.dart';
 
 class SmileIDSmartSelfieAuthentication extends StatelessWidget {
   static const String viewType = "SmileIDSmartSelfieAuthentication";
@@ -27,6 +28,7 @@ class SmileIDSmartSelfieAuthentication extends StatelessWidget {
     bool showAttribution = true,
     bool showInstructions = true,
     bool skipApiSubmission = false,
+    SmileSensitivity smileSensitivity = SmileSensitivity.normal,
     Map<String, String>? extraPartnerParams,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
@@ -42,6 +44,7 @@ class SmileIDSmartSelfieAuthentication extends StatelessWidget {
         "showInstructions": showInstructions,
         "skipApiSubmission": skipApiSubmission,
         "extraPartnerParams": extraPartnerParams,
+        "smileSensitivity": smileSensitivity.name,
       },
     );
   }

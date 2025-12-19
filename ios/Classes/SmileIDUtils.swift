@@ -33,3 +33,16 @@ extension AutoCapture {
         }
     }
 }
+
+extension SmileSensitivity {
+    static func from(_ string: String?) -> SmileSensitivity {
+        switch string?.lowercased() {
+        case "normal":
+            return .normal
+        case "relaxed":
+            return .relaxed
+        default:
+            return .normal
+        }
+    }
+}

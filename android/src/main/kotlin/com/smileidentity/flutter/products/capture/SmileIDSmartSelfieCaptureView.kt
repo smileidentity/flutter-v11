@@ -35,6 +35,8 @@ import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.flutter.views.SmileSelfieComposablePlatformView
 import com.smileidentity.metadata.LocalMetadataProvider
+import com.smileidentity.models.AutoCapture
+import com.smileidentity.models.SmileSensitivity
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
 import com.smileidentity.viewmodel.SelfieUiState
@@ -66,6 +68,9 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     @OptIn(SmileIDOptIn::class)
     @Composable
     override fun Content(args: Map<String, Any?>) {
+        val smileSensitivity = (args["smileSensitivity"] as? String)?.lowercase()?.let { input ->
+            SmileSensitivity.entries.firstOrNull { it.name.lowercase() == input }
+        } ?: SmileSensitivity.NORMAL
         val showConfirmationDialog = args["showConfirmationDialog"] as? Boolean ?: true
         val showInstructions = args["showInstructions"] as? Boolean ?: true
         val showAttribution = args["showAttribution"] as? Boolean ?: true
@@ -99,6 +104,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                         allowNewEnroll = true,
                                         skipApiSubmission = true,
                                         metadata = mutableListOf(),
+                                        smileSensitivity = smileSensitivity
                                     )
                                 },
                             )
@@ -125,7 +131,8 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                     userId,
                                     jobId,
                                     allowAgentMode,
-                                    viewModel,
+                                    smileSensitivity,
+                                    viewModel
                                 )
                             }
                         }
@@ -140,6 +147,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         userId: String,
         jobId: String,
         allowAgentMode: Boolean,
+        smileSensitivity: SmileSensitivity,
         viewModel: SelfieViewModel,
     ) {
         Box(
@@ -156,6 +164,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                 allowNewEnroll = true,
                 skipApiSubmission = true,
                 viewModel = viewModel,
+                smileSensitivity = smileSensitivity
             )
         }
     }
