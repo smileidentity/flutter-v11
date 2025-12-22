@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:smile_id/products/models/model.dart';
 
 import '../../views/smile_view.dart';
 
@@ -24,6 +25,7 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
     bool showAttribution = true,
     bool allowAgentMode = true,
     bool useStrictMode = false,
+    SmileSensitivity smileSensitivity = SmileSensitivity.normal,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
   }) {
@@ -36,6 +38,7 @@ class SmileIDSmartSelfieCaptureView extends StatelessWidget {
         "showAttribution": showAttribution,
         "allowAgentMode": allowAgentMode,
         "useStrictMode": useStrictMode,
+        "smileSensitivity": smileSensitivity.name,
       },
     );
   }
