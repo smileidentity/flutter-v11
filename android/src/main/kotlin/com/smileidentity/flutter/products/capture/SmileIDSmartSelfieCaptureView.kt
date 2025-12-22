@@ -35,7 +35,6 @@ import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.flutter.views.SmileSelfieComposablePlatformView
 import com.smileidentity.metadata.LocalMetadataProvider
-import com.smileidentity.models.AutoCapture
 import com.smileidentity.models.SmileSensitivity
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -104,7 +103,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                         allowNewEnroll = true,
                                         skipApiSubmission = true,
                                         metadata = mutableListOf(),
-                                        smileSensitivity = smileSensitivity
+                                        smileSensitivity = smileSensitivity,
                                     )
                                 },
                             )
@@ -132,7 +131,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                     jobId,
                                     allowAgentMode,
                                     smileSensitivity,
-                                    viewModel
+                                    viewModel,
                                 )
                             }
                         }
@@ -164,7 +163,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                 allowNewEnroll = true,
                 skipApiSubmission = true,
                 viewModel = viewModel,
-                smileSensitivity = smileSensitivity
+                smileSensitivity = smileSensitivity,
             )
         }
     }
