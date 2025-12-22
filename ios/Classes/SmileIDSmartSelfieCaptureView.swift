@@ -22,6 +22,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
         let showAttribution = args["showAttribution"] as? Bool ?? true
         let allowAgentMode = args["allowAgentMode"] as? Bool ?? true
         let useStrictMode = args["useStrictMode"] as? Bool ?? false
+        let smileSensitivity = SmileSensitivity.from(args["smileSensitivity"] as? String)
 
         _viewModel = SelfieViewModel(
             isEnroll: false,
@@ -48,6 +49,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
             allowAgentMode: allowAgentMode,
             showAttribution: showAttribution,
             useStrictMode: useStrictMode,
+            smileSensitivity: smileSensitivity,
             channel: _channel
         )
         _childViewController = embedView(rootView, in: _view, frame: frame)
@@ -66,6 +68,7 @@ struct SmileIDRootView: View {
     let allowAgentMode: Bool
     let showAttribution: Bool
     let useStrictMode: Bool
+    let smileSensitivity: SmileSensitivity
     let channel: FlutterMethodChannel
     static let shared = FileManager()
     private let fileManager = Foundation.FileManager.default
@@ -124,7 +127,9 @@ struct SmileIDRootView: View {
                 }
             } else {
                 SelfieCaptureScreen(
-                    viewModel: viewModel, allowAgentMode: allowAgentMode
+                    viewModel: viewModel,
+                    allowAgentMode: allowAgentMode,
+                    smileSensitivity: smileSensitivity,
                 ).preferredColorScheme(.light)
             }
         }
