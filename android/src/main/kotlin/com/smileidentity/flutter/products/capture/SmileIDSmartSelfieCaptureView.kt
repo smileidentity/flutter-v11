@@ -32,6 +32,7 @@ import com.smileidentity.compose.selfie.SelfieCaptureScreen
 import com.smileidentity.compose.selfie.SmartSelfieInstructionsScreen
 import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
+import com.smileidentity.flutter.utils.toSmileSensitivity
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.flutter.views.SmileSelfieComposablePlatformView
 import com.smileidentity.metadata.LocalMetadataProvider
@@ -67,9 +68,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
     @OptIn(SmileIDOptIn::class)
     @Composable
     override fun Content(args: Map<String, Any?>) {
-        val smileSensitivity = (args["smileSensitivity"] as? String)?.lowercase()?.let { input ->
-            SmileSensitivity.entries.firstOrNull { it.name.lowercase() == input }
-        } ?: SmileSensitivity.NORMAL
+        val smileSensitivity = (args["smileSensitivity"] as? String).toSmileSensitivity()
         val showConfirmationDialog = args["showConfirmationDialog"] as? Boolean ?: true
         val showInstructions = args["showInstructions"] as? Boolean ?: true
         val showAttribution = args["showAttribution"] as? Boolean ?: true

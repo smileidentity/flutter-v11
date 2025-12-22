@@ -15,6 +15,7 @@ import com.smileidentity.compose.theme.colorScheme
 import com.smileidentity.compose.theme.typography
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.utils.toAutoCapture
 import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.metadata.LocalMetadataProvider
@@ -54,9 +55,7 @@ internal class SmileIDDocumentCaptureView private constructor(
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    val autoCapture = (args["autoCapture"] as? String)?.lowercase()?.let { input ->
-                        AutoCapture.entries.firstOrNull { it.name.lowercase() == input }
-                    } ?: AutoCapture.AutoCapture
+                    val autoCapture = (args["autoCapture"] as? String).toAutoCapture()
                     val isDocumentFrontSide = args["isDocumentFrontSide"] as? Boolean ?: true
                     val showInstructions = args["showInstructions"] as? Boolean ?: true
                     val showAttribution = args["showAttribution"] as? Boolean ?: true

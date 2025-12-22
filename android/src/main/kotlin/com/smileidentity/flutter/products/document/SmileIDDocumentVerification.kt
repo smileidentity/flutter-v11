@@ -6,9 +6,9 @@ import com.smileidentity.SmileID
 import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
+import com.smileidentity.flutter.utils.toAutoCapture
 import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
-import com.smileidentity.models.AutoCapture
 import com.smileidentity.results.SmileIDResult
 import com.smileidentity.util.randomJobId
 import com.smileidentity.util.randomUserId
@@ -55,9 +55,7 @@ internal class SmileIDDocumentVerification private constructor(
             jobId = args["jobId"] as? String ?: randomJobId(),
             autoCaptureTimeout = (args["autoCaptureTimeout"] as? Int)?.toLong()?.milliseconds
                 ?: 10.seconds,
-            autoCapture = (args["autoCapture"] as? String)?.lowercase()?.let { input ->
-                AutoCapture.entries.firstOrNull { it.name.lowercase() == input }
-            } ?: AutoCapture.AutoCapture,
+            autoCapture = (args["autoCapture"] as? String).toAutoCapture(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
