@@ -257,7 +257,7 @@ class MainContent extends StatelessWidget {
           MaterialPageRoute<void>(
             builder: (BuildContext context) => MyScaffold(
                 body: SmileIDSmartSelfieAuthentication(
-               smileSensitivity: SmileSensitivity.normal,
+              smileSensitivity: SmileSensitivity.normal,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
