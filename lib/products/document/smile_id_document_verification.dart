@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import '../../views/smile_view.dart';
 import '../models/model.dart';
 
-
 class SmileIDDocumentVerification extends StatelessWidget {
   static const String viewType = "SmileIDDocumentVerification";
   final Map<String, dynamic> creationParams;
