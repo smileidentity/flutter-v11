@@ -8,7 +8,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         let api: SmileIDApi & NSObjectProtocol = SmileIDPlugin()
         SmileIDApiSetup.setUp(binaryMessenger: messenger, api: api)
 
-        SmileID.setWrapperInfo(name: .flutter, version: "11.2.4")
+        SmileID.setWrapperInfo(name: .flutter, version: "11.2.5")
 
         let documentVerificationFactory = SmileIDDocumentVerification.Factory(
             messenger: registrar.messenger()

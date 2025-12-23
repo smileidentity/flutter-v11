@@ -7,6 +7,7 @@ import com.smileidentity.compose.DocumentVerification
 import com.smileidentity.flutter.results.DocumentCaptureResult
 import com.smileidentity.flutter.utils.DocumentCaptureResultAdapter
 import com.smileidentity.flutter.utils.toAutoCapture
+import com.smileidentity.flutter.utils.toSmileSensitivity
 import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.results.SmileIDResult
@@ -42,6 +43,7 @@ internal class SmileIDDocumentVerification private constructor(
     @Composable
     override fun Content(args: Map<String, Any?>) {
         val extraPartnerParams = args["extraPartnerParams"] as? Map<String, String> ?: emptyMap()
+        val smileSensitivity = (args["smileSensitivity"] as? String).toSmileSensitivity()
         SmileID.DocumentVerification(
             countryCode = args["countryCode"] as String,
             documentType = args["documentType"] as? String,
@@ -61,6 +63,7 @@ internal class SmileIDDocumentVerification private constructor(
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
+            smileSensitivity = smileSensitivity,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {

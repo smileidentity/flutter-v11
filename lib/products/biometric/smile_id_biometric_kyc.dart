@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../../views/smile_view.dart';
+import '../models/model.dart';
 
 class SmileIDBiometricKYC extends StatelessWidget {
   static const String viewType = "SmileIDBiometricKYC";
@@ -36,6 +37,7 @@ class SmileIDBiometricKYC extends StatelessWidget {
     bool allowAgentMode = false,
     bool showAttribution = true,
     bool showInstructions = true,
+    SmileSensitivity smileSensitivity = SmileSensitivity.normal,
     bool useStrictMode = false,
     Map<String, String>? extraPartnerParams,
     required Function(String resultJson) onSuccess,
@@ -64,6 +66,7 @@ class SmileIDBiometricKYC extends StatelessWidget {
         "allowAgentMode": allowAgentMode,
         "showAttribution": showAttribution,
         "showInstructions": showInstructions,
+        "smileSensitivity": smileSensitivity.name,
         "useStrictMode": useStrictMode,
         "extraPartnerParams": extraPartnerParams,
       },

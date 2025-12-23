@@ -159,6 +159,7 @@ class MainContent extends StatelessWidget {
               documentType: "DRIVERS_LICENSE",
               autoCapture: AutoCaptureMode.autoCapture,
               autoCaptureTimeout: 10000,
+              smileSensitivity: SmileSensitivity.normal,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');
@@ -354,6 +355,7 @@ class MainContent extends StatelessWidget {
               country: "KE",
               idType: "NATIONAL_ID",
               idNumber: "12345678",
+              smileSensitivity: SmileSensitivity.normal,
               onSuccess: (String? result) {
                 // Your success handling logic
                 Map<String, dynamic> jsonResult = json.decode(result ?? '{}');

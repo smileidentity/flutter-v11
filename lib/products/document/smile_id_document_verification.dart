@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import '../../views/smile_view.dart';
 import '../models/model.dart';
 
+
 class SmileIDDocumentVerification extends StatelessWidget {
   static const String viewType = "SmileIDDocumentVerification";
   final Map<String, dynamic> creationParams;
@@ -37,6 +38,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
     bool allowAgentMode = false,
     bool showInstructions = true,
     bool skipApiSubmission = false,
+    SmileSensitivity smileSensitivity = SmileSensitivity.normal,
     bool useStrictMode = false,
     Map<String, String>? extraPartnerParams,
     required Function(String resultJson) onSuccess,
@@ -62,6 +64,7 @@ class SmileIDDocumentVerification extends StatelessWidget {
         "showInstructions": showInstructions,
         "skipApiSubmission": skipApiSubmission,
         "useStrictMode": useStrictMode,
+        "smileSensitivity": smileSensitivity.name,
         "extraPartnerParams": extraPartnerParams,
       },
     );

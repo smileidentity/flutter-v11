@@ -7,6 +7,7 @@ import com.smileidentity.compose.BiometricKYC
 import com.smileidentity.flutter.results.SmartSelfieCaptureResult
 import com.smileidentity.flutter.utils.SelfieCaptureResultAdapter
 import com.smileidentity.flutter.utils.buildConsentInformation
+import com.smileidentity.flutter.utils.toSmileSensitivity
 import com.smileidentity.flutter.views.SmileComposablePlatformView
 import com.smileidentity.flutter.views.SmileIDViewFactory
 import com.smileidentity.models.IdInfo
@@ -46,6 +47,7 @@ internal class SmileIDBiometricKYC private constructor(
             contactInformation = args["contactInfoConsentGranted"] as? Boolean,
             documentInformation = args["documentInfoConsentGranted"] as? Boolean,
         )
+        val smileSensitivity = (args["smileSensitivity"] as? String).toSmileSensitivity()
 
         SmileID.BiometricKYC(
             idInfo =
@@ -67,6 +69,7 @@ internal class SmileIDBiometricKYC private constructor(
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
+            smileSensitivity = smileSensitivity,
             useStrictMode = args["useStrictMode"] as? Boolean ?: true,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {

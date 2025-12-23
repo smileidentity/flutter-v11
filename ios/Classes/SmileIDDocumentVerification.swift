@@ -40,6 +40,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
             showAttribution: args["showAttribution"] as? Bool ?? true,
+            smileSensitivity: SmileSensitivity.from(args["smileSensitivity"] as? String),
             skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             useStrictMode: args["useStrictMode"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],

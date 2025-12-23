@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
-import 'package:smile_id/products/models/model.dart';
 
 import '../../views/smile_view.dart';
+import '../models/model.dart';
 
 class SmileIDSmartSelfieCaptureView extends StatelessWidget {
   static const String viewType = "SmileIDSmartSelfieCaptureView";
