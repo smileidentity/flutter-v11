@@ -39,9 +39,9 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
             binaryMessenger: messenger
         )
         _childViewController = nil
-        
+
         super.init()
-        
+
         let rootView = SmileIDRootView(
             viewModel: _viewModel,
             showConfirmationDialog: showConfirmationDialog,
@@ -74,10 +74,8 @@ struct SmileIDRootView: View {
     private let fileManager = Foundation.FileManager.default
 
     var body: some View {
-        NavigationView {
-            selfieCaptureScreen
-                .preferredColorScheme(.light)
-        }
+        selfieCaptureScreen
+            .preferredColorScheme(.light)
     }
 
     private var selfieCaptureScreen: some View {
@@ -110,12 +108,16 @@ struct SmileIDRootView: View {
             } else if let selfieToConfirm = viewModel.selfieToConfirm {
                 if showConfirmationDialog {
                     ImageCaptureConfirmationDialog(
-                        title: SmileIDResourcesHelper.localizedString(for: "Confirmation.GoodSelfie"),
-                        subtitle: SmileIDResourcesHelper.localizedString(for: "Confirmation.FaceClear"),
+                        title: SmileIDResourcesHelper.localizedString(
+                            for: "Confirmation.GoodSelfie"),
+                        subtitle: SmileIDResourcesHelper.localizedString(
+                            for: "Confirmation.FaceClear"),
                         image: UIImage(data: selfieToConfirm)!,
-                        confirmationButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.YesUse"),
+                        confirmationButtonText: SmileIDResourcesHelper.localizedString(
+                            for: "Confirmation.YesUse"),
                         onConfirm: viewModel.submitJob,
-                        retakeButtonText: SmileIDResourcesHelper.localizedString(for: "Confirmation.Retake"),
+                        retakeButtonText: SmileIDResourcesHelper.localizedString(
+                            for: "Confirmation.Retake"),
                         onRetake: viewModel.onSelfieRejected,
                         scaleFactor: 1.25
                     )
@@ -164,7 +166,7 @@ extension SmileIDRootView: SmartSelfieResultDelegate {
             let encoder = JSONEncoder()
             encoder.outputFormatting = .prettyPrinted
             if let jsonData = try? encoder.encode(apiResponse),
-               let jsonString = String(data: jsonData, encoding: .utf8)
+                let jsonString = String(data: jsonData, encoding: .utf8)
             {
                 arguments["apiResponse"] = jsonString
             }
@@ -195,7 +197,9 @@ extension SmileIDSmartSelfieCaptureView {
             super.init()
         }
 
-        func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
+        func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?)
+            -> FlutterPlatformView
+        {
             return SmileIDSmartSelfieCaptureView(
                 frame: frame,
                 viewIdentifier: viewId,

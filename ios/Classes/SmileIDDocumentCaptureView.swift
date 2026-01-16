@@ -17,7 +17,8 @@ class SmileIDDocumentCaptureView: NSObject, FlutterPlatformView {
         binaryMessenger messenger: FlutterBinaryMessenger
     ) {
         let jobId = generateJobId()
-        let autoCaptureTimeout = (args["autoCaptureTimeout"] as? Int).map { TimeInterval($0) / 1000.0 } ?? 10.0
+        let autoCaptureTimeout =
+            (args["autoCaptureTimeout"] as? Int).map { TimeInterval($0) / 1000.0 } ?? 10.0
         let autoCapture = AutoCapture.from(args["autoCapture"] as? String)
         let isDocumentFrontSide = args["isDocumentFrontSide"] as? Bool ?? true
         let showInstructions = args["showInstructions"] as? Bool ?? true
@@ -68,30 +69,31 @@ struct SmileIDDocumentRootView: View {
     let channel: FlutterMethodChannel
 
     var body: some View {
-        NavigationView {
-            DocumentCaptureScreen(
-                side: isDocumentFrontSide ? .front : .back,
-                autoCaptureTimeout: autoCaptureTimeout,
-                autoCapture: autoCapture,
-                showInstructions: showInstructions,
-                showAttribution: showAttribution,
-                allowGallerySelection: allowGalleryUpload,
-                showSkipButton: false,
-                instructionsHeroImage: isDocumentFrontSide ? SmileIDResourcesHelper.DocVFrontHero : SmileIDResourcesHelper.DocVBackHero,
-                instructionsTitleText: SmileIDResourcesHelper.localizedString(
-                    for: isDocumentFrontSide ? "Instructions.Document.Front.Header" : "Instructions.Document.Back.Header"
-                ),
-                instructionsSubtitleText: SmileIDResourcesHelper.localizedString(
-                    for: isDocumentFrontSide ? "Instructions.Document.Front.Callout" : "Instructions.Document.Back.Callout"
-                ),
-                captureTitleText: SmileIDResourcesHelper.localizedString(for: "Action.TakePhoto"),
-                knownIdAspectRatio: idAspectRatio,
-                showConfirmation: showConfirmationDialog,
-                onConfirm: onConfirmed,
-                onError: didError,
-                onSkip: onSkip
-            ).preferredColorScheme(.light)
-        }.padding()
+        DocumentCaptureScreen(
+            side: isDocumentFrontSide ? .front : .back,
+            autoCaptureTimeout: autoCaptureTimeout,
+            autoCapture: autoCapture,
+            showInstructions: showInstructions,
+            showAttribution: showAttribution,
+            allowGallerySelection: allowGalleryUpload,
+            showSkipButton: false,
+            instructionsHeroImage: isDocumentFrontSide
+                ? SmileIDResourcesHelper.DocVFrontHero : SmileIDResourcesHelper.DocVBackHero,
+            instructionsTitleText: SmileIDResourcesHelper.localizedString(
+                for: isDocumentFrontSide
+                    ? "Instructions.Document.Front.Header" : "Instructions.Document.Back.Header"
+            ),
+            instructionsSubtitleText: SmileIDResourcesHelper.localizedString(
+                for: isDocumentFrontSide
+                    ? "Instructions.Document.Front.Callout" : "Instructions.Document.Back.Callout"
+            ),
+            captureTitleText: SmileIDResourcesHelper.localizedString(for: "Action.TakePhoto"),
+            knownIdAspectRatio: idAspectRatio,
+            showConfirmation: showConfirmationDialog,
+            onConfirm: onConfirmed,
+            onError: didError,
+            onSkip: onSkip
+        ).preferredColorScheme(.light)
     }
 
     func onConfirmed(data: Data) {
@@ -105,7 +107,7 @@ struct SmileIDDocumentRootView: View {
 
             let documentKey = isDocumentFrontSide ? "documentFrontImage" : "documentBackImage"
             let arguments: [String: Any] = [
-                documentKey: url.absoluteString,
+                documentKey: url.absoluteString
             ]
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
@@ -157,7 +159,9 @@ extension SmileIDDocumentCaptureView {
             super.init()
         }
 
-        func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?) -> FlutterPlatformView {
+        func create(withFrame frame: CGRect, viewIdentifier viewId: Int64, arguments args: Any?)
+            -> FlutterPlatformView
+        {
             return SmileIDDocumentCaptureView(
                 frame: frame,
                 viewIdentifier: viewId,

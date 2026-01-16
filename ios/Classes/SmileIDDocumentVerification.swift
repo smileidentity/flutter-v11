@@ -46,8 +46,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             delegate: self
         )
-        let navView = NavigationView{screen}
-        _childViewController = embedView(navView, in: _view, frame: frame)
+        _childViewController = embedView(screen, in: _view, frame: frame)
     }
 
     func view() -> UIView {

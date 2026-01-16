@@ -3,7 +3,9 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
+class SmileIDSmartSelfieAuthenticationEnhanced: NSObject, FlutterPlatformView,
+    SmartSelfieResultDelegate
+{
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -59,7 +61,7 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
         _channel.invokeMethod("onError", arguments: error.localizedDescription)
     }
 
-    class Factory : NSObject, FlutterPlatformViewFactory {
+    class Factory: NSObject, FlutterPlatformViewFactory {
         private var messenger: FlutterBinaryMessenger
         init(messenger: FlutterBinaryMessenger) {
             self.messenger = messenger
@@ -80,7 +82,7 @@ class SmileIDSmartSelfieAuthenticationEnhanced : NSObject, FlutterPlatformView, 
         }
 
         public func createArgsCodec() -> FlutterMessageCodec & NSObjectProtocol {
-              return FlutterStandardMessageCodec.sharedInstance()
+            return FlutterStandardMessageCodec.sharedInstance()
         }
     }
 }
@@ -95,16 +97,14 @@ struct EnhancedSelfieAuthenticationRootView: View {
     let delegate: SmartSelfieResultDelegate
 
     var body: some View {
-        NavigationView {
-            SmileID.smartSelfieAuthenticationScreenEnhanced(
-                userId: userId,
-                allowNewEnroll: allowNewEnroll,
-                showAttribution: showAttribution,
-                showInstructions: showInstructions,
-                skipApiSubmission: skipApiSubmission,
-                extraPartnerParams: extraPartnerParams,
-                delegate: delegate
-            )
-        }
+        SmileID.smartSelfieAuthenticationScreenEnhanced(
+            userId: userId,
+            allowNewEnroll: allowNewEnroll,
+            showAttribution: showAttribution,
+            showInstructions: showInstructions,
+            skipApiSubmission: skipApiSubmission,
+            extraPartnerParams: extraPartnerParams,
+            delegate: delegate
+        )
     }
 }
