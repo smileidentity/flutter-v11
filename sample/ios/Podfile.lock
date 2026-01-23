@@ -10,10 +10,10 @@ PODS:
   - Sentry/Core (8.57.1)
   - smile_id (11.2.5):
     - Flutter
-    - SmileID (= 11.1.5)
-  - SmileID (11.1.5):
-    - SmileIDSDK (= 11.1.5)
-  - SmileIDSDK (11.1.5):
+    - SmileID (= 11.1.7)
+  - SmileID (11.1.7):
+    - SmileIDSDK (= 11.1.7)
+  - SmileIDSDK (11.1.7):
     - FingerprintJS (= 1.6.0)
     - Sentry (= 8.57.1)
     - ZIPFoundation (= 0.9.20)
@@ -41,9 +41,9 @@ SPEC CHECKSUMS:
   FingerprintJS: 3a0c3e7f5035ecae199e5e5836200d9b20f1266a
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   Sentry: ea4ca7cd1a46c77dcc8123804ce36d8f5603a841
-  smile_id: 5bd459e726861957f17ec73a551c58634792bf57
-  SmileID: 686c7896fddc6accca25f7d1a760c41ea44e9b09
-  SmileIDSDK: 2734ca84cb623ffd33a036da47008adbe589d3e0
+  smile_id: 8308ddbf568333007addd9cdaab01e14580f47b2
+  SmileID: e27a45aef3108362867110a9fd38181881fd424a
+  SmileIDSDK: f158a8575f22439a4dfbf6eb50211c4a896de237
   ZIPFoundation: dfd3d681c4053ff7e2f7350bc4e53b5dba3f5351
 
 PODFILE CHECKSUM: 81be4fc09878044dc75c762493ad56e861d5bf57
