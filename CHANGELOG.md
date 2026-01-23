@@ -1,5 +1,14 @@
 # Release Notes
 
+## 11.2.6 - December 23, 2025
+
+### Changed
+* Bump Android SDK to [v11.1.7](https://github.com/smileidentity/android/releases/tag/v11.1.7)
+* Bump iOS SDK to [v11.1.7](https://github.com/smileidentity/ios/releases/tag/v11.1.7)
+
+### Fixed
+* Fixed layout issues on iOS in an iPad
+
 ## 11.2.5 - December 23, 2025
 
 ### Changed
