@@ -100,6 +100,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                         userId = userId,
                                         jobId = jobId,
                                         allowNewEnroll = true,
+                                        allowAgentMode = allowAgentMode,
                                         skipApiSubmission = true,
                                         metadata = mutableListOf(),
                                         smileSensitivity = smileSensitivity,
