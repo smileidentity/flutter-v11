@@ -68,7 +68,8 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
             consentInformation: consentInformation,
             delegate: self
         )
-        _childViewController = embedView(screen, in: _view, frame: frame)
+        let navView = NavigationView{screen}
+        _childViewController = embedView(navView, in: _view, frame: frame)
     }
     
     func view() -> UIView {

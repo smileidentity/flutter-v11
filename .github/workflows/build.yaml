@@ -45,8 +45,13 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get && cd sample && flutter pub get && cd ..
       - name: Lint Android
-        working-directory: ./sample/android
-        run: ./gradlew ktlintCheck
+        uses: musichin/ktlint-check@v4
+        with:
+          ktlint-version: "1.7.0"
+          patterns: |
+            **/**.kt
+            !**/**.g.kt
+            !**/generated/**
       - name: Test
         run: flutter test && cd sample && flutter test && cd ..
       - name: Build Android Sample App

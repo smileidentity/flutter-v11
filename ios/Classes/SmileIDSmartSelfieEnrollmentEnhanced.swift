@@ -3,8 +3,7 @@ import UIKit
 import SmileID
 import SwiftUI
 
-class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, SmartSelfieResultDelegate
-{
+class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, SmartSelfieResultDelegate {
     private var _view: UIView
     private var _channel: FlutterMethodChannel
     private var _childViewController: UIViewController?
@@ -45,7 +44,7 @@ class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, Smart
         let successData = SmartSelfieSuccessData(
             selfieFile: selfieImage.absoluteString,
             livenessFiles: livenessImages.map {
-                $0.absoluteString
+               $0.absoluteString
             },
             apiResponse: apiResponse
         )
@@ -97,7 +96,7 @@ struct SmartSelfieSuccessData: Encodable {
         jsonEncoder.outputFormatting = .withoutEscapingSlashes
         let json = try? jsonEncoder.encode(self)
         guard let data = json,
-            let jsonString = String(data: data, encoding: .utf8)
+              let jsonString = String(data: data, encoding: .utf8)
         else {
             return nil
         }
@@ -115,14 +114,16 @@ struct EnhancedSelfieEnrollmentRootView: View {
     let delegate: SmartSelfieResultDelegate
 
     var body: some View {
-        SmileID.smartSelfieEnrollmentScreenEnhanced(
-            userId: userId,
-            allowNewEnroll: allowNewEnroll,
-            showAttribution: showAttribution,
-            showInstructions: showInstructions,
-            skipApiSubmission: skipApiSubmission,
-            extraPartnerParams: extraPartnerParams,
-            delegate: delegate
-        )
+        NavigationView {
+            SmileID.smartSelfieEnrollmentScreenEnhanced(
+                userId: userId,
+                allowNewEnroll: allowNewEnroll,
+                showAttribution: showAttribution,
+                showInstructions: showInstructions,
+                skipApiSubmission: skipApiSubmission,
+                extraPartnerParams: extraPartnerParams,
+                delegate: delegate
+            )
+        }
     }
 }
