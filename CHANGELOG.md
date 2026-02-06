@@ -1,5 +1,10 @@
 # Release Notes
 
+### 11.2.8 - February 6, 2026
+
+### Fixed
+- Fixed the navigation bug where tapping “Get Started” failed to advance the flow in the selfie capture flows on iOS.
+
 ## 11.2.7 - January 23, 2026
 
 ### Changed
