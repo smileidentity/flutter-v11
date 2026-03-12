@@ -66,6 +66,7 @@ internal class SmileIDDocumentVerification private constructor(
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             smileSensitivity = smileSensitivity,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
+            skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {

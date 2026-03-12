@@ -66,6 +66,7 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
+            skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
             consentInformation = consentInformation,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {

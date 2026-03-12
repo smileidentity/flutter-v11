@@ -65,6 +65,7 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
             showInstructions: args["showInstructions"] as? Bool ?? true,
             smileSensitivity: SmileSensitivity.from(args["smileSensitivity"] as? String),
             useStrictMode: args["useStrictMode"] as? Bool ?? false,
+            skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
             extraPartnerParams: args["extraPartnerParams"] as? [String: String] ?? [:],
             consentInformation: consentInformation,
             delegate: self

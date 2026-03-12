@@ -40,6 +40,7 @@ class SmileIDBiometricKYC extends StatelessWidget {
     bool showInstructions = true,
     SmileSensitivity smileSensitivity = SmileSensitivity.normal,
     bool useStrictMode = false,
+    bool skipApiSubmission = false,
     Map<String, String>? extraPartnerParams,
     required Function(String resultJson) onSuccess,
     required Function(String errorMessage) onError,
@@ -70,6 +71,7 @@ class SmileIDBiometricKYC extends StatelessWidget {
         "showInstructions": showInstructions,
         "smileSensitivity": smileSensitivity.name,
         "useStrictMode": useStrictMode,
+        "skipApiSubmission": skipApiSubmission,
         "extraPartnerParams": extraPartnerParams,
       },
     );

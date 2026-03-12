@@ -72,6 +72,7 @@ internal class SmileIDBiometricKYC private constructor(
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             smileSensitivity = smileSensitivity,
             useStrictMode = args["useStrictMode"] as? Boolean ?: true,
+            skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {
