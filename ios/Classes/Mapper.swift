@@ -73,7 +73,7 @@ extension FlutterPartnerParams {
         return PartnerParams(
             jobId: jobId,
             userId: userId,
-            jobType: jobType!.toRequest(),
+            jobType: jobType?.toRequest(),
             extras: mappedExtras
         )
     }
@@ -85,7 +85,7 @@ extension PartnerParams {
             jobType: jobType?.toResponse(),
             jobId: jobId,
             userId: userId,
-            extras: extras
+            extras: extras?.reduce(into: [String?: String?]()) { $0[$1.key] = $1.value }
         )
     }
 }
