@@ -14,20 +14,21 @@ PlatformException _createConnectionError(String channelName) {
     message: 'Unable to establish connection on channel: "$channelName".',
   );
 }
+
 bool _deepEquals(Object? a, Object? b) {
   if (a is List && b is List) {
     return a.length == b.length &&
         a.indexed
-        .every(((int, dynamic) item) => _deepEquals(item.$2, b[item.$1]));
+            .every(((int, dynamic) item) => _deepEquals(item.$2, b[item.$1]));
   }
   if (a is Map && b is Map) {
-    return a.length == b.length && a.entries.every((MapEntry<Object?, Object?> entry) =>
-        (b as Map<Object?, Object?>).containsKey(entry.key) &&
-        _deepEquals(entry.value, b[entry.key]));
+    return a.length == b.length &&
+        a.entries.every((MapEntry<Object?, Object?> entry) =>
+            (b as Map<Object?, Object?>).containsKey(entry.key) &&
+            _deepEquals(entry.value, b[entry.key]));
   }
   return a == b;
 }
-
 
 enum FlutterJobType {
   enhancedKyc,
@@ -108,7 +109,8 @@ class FlutterConsentInformation {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterConsentInformation decode(Object result) {
     result as List<Object?>;
@@ -123,7 +125,8 @@ class FlutterConsentInformation {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterConsentInformation || other.runtimeType != runtimeType) {
+    if (other is! FlutterConsentInformation ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -134,8 +137,7 @@ class FlutterConsentInformation {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 ///  Custom values specific to partners can be placed in [extras]
@@ -165,7 +167,8 @@ class FlutterPartnerParams {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterPartnerParams decode(Object result) {
     result as List<Object?>;
@@ -191,8 +194,7 @@ class FlutterPartnerParams {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 /// The Auth Smile request. Auth Smile serves multiple purposes:
@@ -246,7 +248,8 @@ class FlutterAuthenticationRequest {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterAuthenticationRequest decode(Object result) {
     result as List<Object?>;
@@ -263,7 +266,8 @@ class FlutterAuthenticationRequest {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterAuthenticationRequest || other.runtimeType != runtimeType) {
+    if (other is! FlutterAuthenticationRequest ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -274,8 +278,7 @@ class FlutterAuthenticationRequest {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 /// [consentInfo] is only populated when a country and ID type are provided in the
@@ -318,7 +321,8 @@ class FlutterAuthenticationResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterAuthenticationResponse decode(Object result) {
     result as List<Object?>;
@@ -335,7 +339,8 @@ class FlutterAuthenticationResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterAuthenticationResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterAuthenticationResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -346,8 +351,7 @@ class FlutterAuthenticationResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterPrepUploadRequest {
@@ -384,7 +388,8 @@ class FlutterPrepUploadRequest {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterPrepUploadRequest decode(Object result) {
     result as List<Object?>;
@@ -401,7 +406,8 @@ class FlutterPrepUploadRequest {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterPrepUploadRequest || other.runtimeType != runtimeType) {
+    if (other is! FlutterPrepUploadRequest ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -412,8 +418,7 @@ class FlutterPrepUploadRequest {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterPrepUploadResponse {
@@ -442,7 +447,8 @@ class FlutterPrepUploadResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterPrepUploadResponse decode(Object result) {
     result as List<Object?>;
@@ -457,7 +463,8 @@ class FlutterPrepUploadResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterPrepUploadResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterPrepUploadResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -468,8 +475,7 @@ class FlutterPrepUploadResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterUploadRequest {
@@ -490,7 +496,8 @@ class FlutterUploadRequest {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterUploadRequest decode(Object result) {
     result as List<Object?>;
@@ -514,8 +521,7 @@ class FlutterUploadRequest {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterUploadImageInfo {
@@ -536,7 +542,8 @@ class FlutterUploadImageInfo {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterUploadImageInfo decode(Object result) {
     result as List<Object?>;
@@ -560,8 +567,7 @@ class FlutterUploadImageInfo {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterIdInfo {
@@ -610,7 +616,8 @@ class FlutterIdInfo {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterIdInfo decode(Object result) {
     result as List<Object?>;
@@ -641,8 +648,7 @@ class FlutterIdInfo {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterEnhancedKycResponse {
@@ -703,7 +709,8 @@ class FlutterEnhancedKycResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterEnhancedKycResponse decode(Object result) {
     result as List<Object?>;
@@ -726,7 +733,8 @@ class FlutterEnhancedKycResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterEnhancedKycResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterEnhancedKycResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -737,8 +745,7 @@ class FlutterEnhancedKycResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterActions {
@@ -819,7 +826,8 @@ class FlutterActions {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterActions decode(Object result) {
     result as List<Object?>;
@@ -858,8 +866,7 @@ class FlutterActions {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 /// [canAccess] Whether or not the ID type is enabled for the partner
@@ -882,7 +889,8 @@ class FlutterConsentInfo {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterConsentInfo decode(Object result) {
     result as List<Object?>;
@@ -906,8 +914,7 @@ class FlutterConsentInfo {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 /// [timestamp] is *not* a [DateTime] because technically, any arbitrary value could have been
@@ -978,7 +985,8 @@ class FlutterEnhancedKycRequest {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterEnhancedKycRequest decode(Object result) {
     result as List<Object?>;
@@ -1003,7 +1011,8 @@ class FlutterEnhancedKycRequest {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterEnhancedKycRequest || other.runtimeType != runtimeType) {
+    if (other is! FlutterEnhancedKycRequest ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1014,8 +1023,7 @@ class FlutterEnhancedKycRequest {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterEnhancedKycAsyncResponse {
@@ -1032,7 +1040,8 @@ class FlutterEnhancedKycAsyncResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterEnhancedKycAsyncResponse decode(Object result) {
     result as List<Object?>;
@@ -1044,7 +1053,8 @@ class FlutterEnhancedKycAsyncResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterEnhancedKycAsyncResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterEnhancedKycAsyncResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1055,8 +1065,7 @@ class FlutterEnhancedKycAsyncResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterImageLinks {
@@ -1077,7 +1086,8 @@ class FlutterImageLinks {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterImageLinks decode(Object result) {
     result as List<Object?>;
@@ -1101,8 +1111,7 @@ class FlutterImageLinks {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterJobStatusRequest {
@@ -1143,7 +1152,8 @@ class FlutterJobStatusRequest {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterJobStatusRequest decode(Object result) {
     result as List<Object?>;
@@ -1172,8 +1182,7 @@ class FlutterJobStatusRequest {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterSmartSelfieJobResult {
@@ -1210,7 +1219,8 @@ class FlutterSmartSelfieJobResult {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterSmartSelfieJobResult decode(Object result) {
     result as List<Object?>;
@@ -1227,7 +1237,8 @@ class FlutterSmartSelfieJobResult {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterSmartSelfieJobResult || other.runtimeType != runtimeType) {
+    if (other is! FlutterSmartSelfieJobResult ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1238,8 +1249,7 @@ class FlutterSmartSelfieJobResult {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterSmartSelfieJobStatusResponse {
@@ -1284,7 +1294,8 @@ class FlutterSmartSelfieJobStatusResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterSmartSelfieJobStatusResponse decode(Object result) {
     result as List<Object?>;
@@ -1295,7 +1306,8 @@ class FlutterSmartSelfieJobStatusResponse {
       code: result[3]! as String,
       result: result[4] as FlutterSmartSelfieJobResult?,
       resultString: result[5] as String?,
-      history: (result[6] as List<Object?>?)?.cast<FlutterSmartSelfieJobResult?>(),
+      history:
+          (result[6] as List<Object?>?)?.cast<FlutterSmartSelfieJobResult?>(),
       imageLinks: result[7] as FlutterImageLinks?,
     );
   }
@@ -1303,7 +1315,8 @@ class FlutterSmartSelfieJobStatusResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterSmartSelfieJobStatusResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterSmartSelfieJobStatusResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1314,8 +1327,7 @@ class FlutterSmartSelfieJobStatusResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterSmartSelfieResponse {
@@ -1368,7 +1380,8 @@ class FlutterSmartSelfieResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterSmartSelfieResponse decode(Object result) {
     result as List<Object?>;
@@ -1389,7 +1402,8 @@ class FlutterSmartSelfieResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterSmartSelfieResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterSmartSelfieResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1400,8 +1414,7 @@ class FlutterSmartSelfieResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterDocumentVerificationJobResult {
@@ -1478,7 +1491,8 @@ class FlutterDocumentVerificationJobResult {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterDocumentVerificationJobResult decode(Object result) {
     result as List<Object?>;
@@ -1505,7 +1519,8 @@ class FlutterDocumentVerificationJobResult {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterDocumentVerificationJobResult || other.runtimeType != runtimeType) {
+    if (other is! FlutterDocumentVerificationJobResult ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1516,8 +1531,7 @@ class FlutterDocumentVerificationJobResult {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterDocumentVerificationJobStatusResponse {
@@ -1562,7 +1576,8 @@ class FlutterDocumentVerificationJobStatusResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterDocumentVerificationJobStatusResponse decode(Object result) {
     result as List<Object?>;
@@ -1573,7 +1588,8 @@ class FlutterDocumentVerificationJobStatusResponse {
       code: result[3]! as String,
       result: result[4] as FlutterDocumentVerificationJobResult?,
       resultString: result[5] as String?,
-      history: (result[6] as List<Object?>?)?.cast<FlutterDocumentVerificationJobResult?>(),
+      history: (result[6] as List<Object?>?)
+          ?.cast<FlutterDocumentVerificationJobResult?>(),
       imageLinks: result[7] as FlutterImageLinks?,
     );
   }
@@ -1581,7 +1597,8 @@ class FlutterDocumentVerificationJobStatusResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterDocumentVerificationJobStatusResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterDocumentVerificationJobStatusResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1592,8 +1609,7 @@ class FlutterDocumentVerificationJobStatusResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterBiometricKycJobResult {
@@ -1694,7 +1710,8 @@ class FlutterBiometricKycJobResult {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterBiometricKycJobResult decode(Object result) {
     result as List<Object?>;
@@ -1712,7 +1729,8 @@ class FlutterBiometricKycJobResult {
       address: result[10] as String?,
       country: result[11] as String?,
       documentImageBase64: result[12] as String?,
-      fullData: (result[13] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+      fullData:
+          (result[13] as Map<Object?, Object?>?)?.cast<String?, String?>(),
       fullName: result[14] as String?,
       idNumber: result[15] as String?,
       phoneNumber: result[16] as String?,
@@ -1720,14 +1738,16 @@ class FlutterBiometricKycJobResult {
       expirationDate: result[18] as String?,
       secondaryIdNumber: result[19] as String?,
       idNumberPreviouslyRegistered: result[20] as bool?,
-      previousRegistrantsUserIds: (result[21] as List<Object?>?)?.cast<String?>(),
+      previousRegistrantsUserIds:
+          (result[21] as List<Object?>?)?.cast<String?>(),
     );
   }
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterBiometricKycJobResult || other.runtimeType != runtimeType) {
+    if (other is! FlutterBiometricKycJobResult ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1738,8 +1758,7 @@ class FlutterBiometricKycJobResult {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterBiometricKycJobStatusResponse {
@@ -1784,7 +1803,8 @@ class FlutterBiometricKycJobStatusResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterBiometricKycJobStatusResponse decode(Object result) {
     result as List<Object?>;
@@ -1795,7 +1815,8 @@ class FlutterBiometricKycJobStatusResponse {
       code: result[3]! as String,
       result: result[4] as FlutterBiometricKycJobResult?,
       resultString: result[5] as String?,
-      history: (result[6] as List<Object?>?)?.cast<FlutterBiometricKycJobResult?>(),
+      history:
+          (result[6] as List<Object?>?)?.cast<FlutterBiometricKycJobResult?>(),
       imageLinks: result[7] as FlutterImageLinks?,
     );
   }
@@ -1803,7 +1824,8 @@ class FlutterBiometricKycJobStatusResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterBiometricKycJobStatusResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterBiometricKycJobStatusResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1814,8 +1836,7 @@ class FlutterBiometricKycJobStatusResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterEnhancedDocumentVerificationJobResult {
@@ -1916,7 +1937,8 @@ class FlutterEnhancedDocumentVerificationJobResult {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterEnhancedDocumentVerificationJobResult decode(Object result) {
     result as List<Object?>;
@@ -1934,7 +1956,8 @@ class FlutterEnhancedDocumentVerificationJobResult {
       address: result[10] as String?,
       country: result[11] as String?,
       documentImageBase64: result[12] as String?,
-      fullData: (result[13] as Map<Object?, Object?>?)?.cast<String?, String?>(),
+      fullData:
+          (result[13] as Map<Object?, Object?>?)?.cast<String?, String?>(),
       fullName: result[14] as String?,
       idNumber: result[15] as String?,
       phoneNumber: result[16] as String?,
@@ -1942,14 +1965,16 @@ class FlutterEnhancedDocumentVerificationJobResult {
       expirationDate: result[18] as String?,
       secondaryIdNumber: result[19] as String?,
       idNumberPreviouslyRegistered: result[20] as bool?,
-      previousRegistrantsUserIds: (result[21] as List<Object?>?)?.cast<String?>(),
+      previousRegistrantsUserIds:
+          (result[21] as List<Object?>?)?.cast<String?>(),
     );
   }
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterEnhancedDocumentVerificationJobResult || other.runtimeType != runtimeType) {
+    if (other is! FlutterEnhancedDocumentVerificationJobResult ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -1960,8 +1985,7 @@ class FlutterEnhancedDocumentVerificationJobResult {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterEnhancedDocumentVerificationJobStatusResponse {
@@ -2006,9 +2030,11 @@ class FlutterEnhancedDocumentVerificationJobStatusResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
-  static FlutterEnhancedDocumentVerificationJobStatusResponse decode(Object result) {
+  static FlutterEnhancedDocumentVerificationJobStatusResponse decode(
+      Object result) {
     result as List<Object?>;
     return FlutterEnhancedDocumentVerificationJobStatusResponse(
       timestamp: result[0]! as String,
@@ -2017,7 +2043,8 @@ class FlutterEnhancedDocumentVerificationJobStatusResponse {
       code: result[3]! as String,
       result: result[4] as FlutterEnhancedDocumentVerificationJobResult?,
       resultString: result[5] as String?,
-      history: (result[6] as List<Object?>?)?.cast<FlutterEnhancedDocumentVerificationJobResult?>(),
+      history: (result[6] as List<Object?>?)
+          ?.cast<FlutterEnhancedDocumentVerificationJobResult?>(),
       imageLinks: result[7] as FlutterImageLinks?,
     );
   }
@@ -2025,7 +2052,8 @@ class FlutterEnhancedDocumentVerificationJobStatusResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterEnhancedDocumentVerificationJobStatusResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterEnhancedDocumentVerificationJobStatusResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -2036,8 +2064,7 @@ class FlutterEnhancedDocumentVerificationJobStatusResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterProductsConfigRequest {
@@ -2062,7 +2089,8 @@ class FlutterProductsConfigRequest {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterProductsConfigRequest decode(Object result) {
     result as List<Object?>;
@@ -2076,7 +2104,8 @@ class FlutterProductsConfigRequest {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterProductsConfigRequest || other.runtimeType != runtimeType) {
+    if (other is! FlutterProductsConfigRequest ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -2087,8 +2116,7 @@ class FlutterProductsConfigRequest {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterProductsConfigResponse {
@@ -2109,12 +2137,14 @@ class FlutterProductsConfigResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterProductsConfigResponse decode(Object result) {
     result as List<Object?>;
     return FlutterProductsConfigResponse(
-      consentRequired: (result[0] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
+      consentRequired: (result[0] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
       idSelection: result[1]! as FlutterIdSelection,
     );
   }
@@ -2122,7 +2152,8 @@ class FlutterProductsConfigResponse {
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterProductsConfigResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterProductsConfigResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -2133,8 +2164,7 @@ class FlutterProductsConfigResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterIdSelection {
@@ -2163,15 +2193,20 @@ class FlutterIdSelection {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterIdSelection decode(Object result) {
     result as List<Object?>;
     return FlutterIdSelection(
-      basicKyc: (result[0] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
-      biometricKyc: (result[1] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
-      enhancedKyc: (result[2] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
-      documentVerification: (result[3] as Map<Object?, Object?>?)!.cast<String?, List<String?>?>(),
+      basicKyc: (result[0] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
+      biometricKyc: (result[1] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
+      enhancedKyc: (result[2] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
+      documentVerification: (result[3] as Map<Object?, Object?>?)!
+          .cast<String?, List<String?>?>(),
     );
   }
 
@@ -2189,8 +2224,7 @@ class FlutterIdSelection {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterValidDocumentsResponse {
@@ -2207,19 +2241,22 @@ class FlutterValidDocumentsResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterValidDocumentsResponse decode(Object result) {
     result as List<Object?>;
     return FlutterValidDocumentsResponse(
-      validDocuments: (result[0] as List<Object?>?)!.cast<FlutterValidDocument?>(),
+      validDocuments:
+          (result[0] as List<Object?>?)!.cast<FlutterValidDocument?>(),
     );
   }
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) {
-    if (other is! FlutterValidDocumentsResponse || other.runtimeType != runtimeType) {
+    if (other is! FlutterValidDocumentsResponse ||
+        other.runtimeType != runtimeType) {
       return false;
     }
     if (identical(this, other)) {
@@ -2230,8 +2267,7 @@ class FlutterValidDocumentsResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterValidDocument {
@@ -2252,7 +2288,8 @@ class FlutterValidDocument {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterValidDocument decode(Object result) {
     result as List<Object?>;
@@ -2276,8 +2313,7 @@ class FlutterValidDocument {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterCountry {
@@ -2302,7 +2338,8 @@ class FlutterCountry {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterCountry decode(Object result) {
     result as List<Object?>;
@@ -2327,8 +2364,7 @@ class FlutterCountry {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterIdType {
@@ -2357,7 +2393,8 @@ class FlutterIdType {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterIdType decode(Object result) {
     result as List<Object?>;
@@ -2383,8 +2420,7 @@ class FlutterIdType {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterServicesResponse {
@@ -2405,7 +2441,8 @@ class FlutterServicesResponse {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterServicesResponse decode(Object result) {
     result as List<Object?>;
@@ -2429,8 +2466,7 @@ class FlutterServicesResponse {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterBankCode {
@@ -2451,7 +2487,8 @@ class FlutterBankCode {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterBankCode decode(Object result) {
     result as List<Object?>;
@@ -2475,8 +2512,7 @@ class FlutterBankCode {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterHostedWeb {
@@ -2513,17 +2549,24 @@ class FlutterHostedWeb {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterHostedWeb decode(Object result) {
     result as List<Object?>;
     return FlutterHostedWeb(
-      basicKyc: (result[0] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      biometricKyc: (result[1] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      enhancedKyc: (result[2] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      documentVerification: (result[3] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      enhancedKycSmartSelfie: (result[4] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
-      enhancedDocumentVerification: (result[5] as Map<Object?, Object?>?)!.cast<String?, FlutterCountryInfo?>(),
+      basicKyc: (result[0] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      biometricKyc: (result[1] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      enhancedKyc: (result[2] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      documentVerification: (result[3] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      enhancedKycSmartSelfie: (result[4] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
+      enhancedDocumentVerification: (result[5] as Map<Object?, Object?>?)!
+          .cast<String?, FlutterCountryInfo?>(),
     );
   }
 
@@ -2541,8 +2584,7 @@ class FlutterHostedWeb {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterCountryInfo {
@@ -2567,14 +2609,16 @@ class FlutterCountryInfo {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterCountryInfo decode(Object result) {
     result as List<Object?>;
     return FlutterCountryInfo(
       countryCode: result[0]! as String,
       name: result[1]! as String,
-      availableIdTypes: (result[2] as List<Object?>?)!.cast<FlutterAvailableIdType?>(),
+      availableIdTypes:
+          (result[2] as List<Object?>?)!.cast<FlutterAvailableIdType?>(),
     );
   }
 
@@ -2592,8 +2636,7 @@ class FlutterCountryInfo {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterAvailableIdType {
@@ -2626,7 +2669,8 @@ class FlutterAvailableIdType {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterAvailableIdType decode(Object result) {
     result as List<Object?>;
@@ -2653,8 +2697,7 @@ class FlutterAvailableIdType {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
 
 class FlutterConfig {
@@ -2683,7 +2726,8 @@ class FlutterConfig {
   }
 
   Object encode() {
-    return _toList();  }
+    return _toList();
+  }
 
   static FlutterConfig decode(Object result) {
     result as List<Object?>;
@@ -2709,10 +2753,8 @@ class FlutterConfig {
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
-  int get hashCode => Object.hashAll(_toList())
-;
+  int get hashCode => Object.hashAll(_toList());
 }
-
 
 class _PigeonCodec extends StandardMessageCodec {
   const _PigeonCodec();
@@ -2721,133 +2763,133 @@ class _PigeonCodec extends StandardMessageCodec {
     if (value is int) {
       buffer.putUint8(4);
       buffer.putInt64(value);
-    }    else if (value is FlutterJobType) {
+    } else if (value is FlutterJobType) {
       buffer.putUint8(129);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterJobTypeV2) {
+    } else if (value is FlutterJobTypeV2) {
       buffer.putUint8(130);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterImageType) {
+    } else if (value is FlutterImageType) {
       buffer.putUint8(131);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterActionResult) {
+    } else if (value is FlutterActionResult) {
       buffer.putUint8(132);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterSmartSelfieStatus) {
+    } else if (value is FlutterSmartSelfieStatus) {
       buffer.putUint8(133);
       writeValue(buffer, value.index);
-    }    else if (value is FlutterConsentInformation) {
+    } else if (value is FlutterConsentInformation) {
       buffer.putUint8(134);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPartnerParams) {
+    } else if (value is FlutterPartnerParams) {
       buffer.putUint8(135);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAuthenticationRequest) {
+    } else if (value is FlutterAuthenticationRequest) {
       buffer.putUint8(136);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAuthenticationResponse) {
+    } else if (value is FlutterAuthenticationResponse) {
       buffer.putUint8(137);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPrepUploadRequest) {
+    } else if (value is FlutterPrepUploadRequest) {
       buffer.putUint8(138);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterPrepUploadResponse) {
+    } else if (value is FlutterPrepUploadResponse) {
       buffer.putUint8(139);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterUploadRequest) {
+    } else if (value is FlutterUploadRequest) {
       buffer.putUint8(140);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterUploadImageInfo) {
+    } else if (value is FlutterUploadImageInfo) {
       buffer.putUint8(141);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdInfo) {
+    } else if (value is FlutterIdInfo) {
       buffer.putUint8(142);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycResponse) {
+    } else if (value is FlutterEnhancedKycResponse) {
       buffer.putUint8(143);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterActions) {
+    } else if (value is FlutterActions) {
       buffer.putUint8(144);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterConsentInfo) {
+    } else if (value is FlutterConsentInfo) {
       buffer.putUint8(145);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycRequest) {
+    } else if (value is FlutterEnhancedKycRequest) {
       buffer.putUint8(146);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedKycAsyncResponse) {
+    } else if (value is FlutterEnhancedKycAsyncResponse) {
       buffer.putUint8(147);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterImageLinks) {
+    } else if (value is FlutterImageLinks) {
       buffer.putUint8(148);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterJobStatusRequest) {
+    } else if (value is FlutterJobStatusRequest) {
       buffer.putUint8(149);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieJobResult) {
+    } else if (value is FlutterSmartSelfieJobResult) {
       buffer.putUint8(150);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieJobStatusResponse) {
+    } else if (value is FlutterSmartSelfieJobStatusResponse) {
       buffer.putUint8(151);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterSmartSelfieResponse) {
+    } else if (value is FlutterSmartSelfieResponse) {
       buffer.putUint8(152);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterDocumentVerificationJobResult) {
+    } else if (value is FlutterDocumentVerificationJobResult) {
       buffer.putUint8(153);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterDocumentVerificationJobStatusResponse) {
+    } else if (value is FlutterDocumentVerificationJobStatusResponse) {
       buffer.putUint8(154);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBiometricKycJobResult) {
+    } else if (value is FlutterBiometricKycJobResult) {
       buffer.putUint8(155);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBiometricKycJobStatusResponse) {
+    } else if (value is FlutterBiometricKycJobStatusResponse) {
       buffer.putUint8(156);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedDocumentVerificationJobResult) {
+    } else if (value is FlutterEnhancedDocumentVerificationJobResult) {
       buffer.putUint8(157);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
+    } else if (value is FlutterEnhancedDocumentVerificationJobStatusResponse) {
       buffer.putUint8(158);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterProductsConfigRequest) {
+    } else if (value is FlutterProductsConfigRequest) {
       buffer.putUint8(159);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterProductsConfigResponse) {
+    } else if (value is FlutterProductsConfigResponse) {
       buffer.putUint8(160);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdSelection) {
+    } else if (value is FlutterIdSelection) {
       buffer.putUint8(161);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterValidDocumentsResponse) {
+    } else if (value is FlutterValidDocumentsResponse) {
       buffer.putUint8(162);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterValidDocument) {
+    } else if (value is FlutterValidDocument) {
       buffer.putUint8(163);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterCountry) {
+    } else if (value is FlutterCountry) {
       buffer.putUint8(164);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterIdType) {
+    } else if (value is FlutterIdType) {
       buffer.putUint8(165);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterServicesResponse) {
+    } else if (value is FlutterServicesResponse) {
       buffer.putUint8(166);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterBankCode) {
+    } else if (value is FlutterBankCode) {
       buffer.putUint8(167);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterHostedWeb) {
+    } else if (value is FlutterHostedWeb) {
       buffer.putUint8(168);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterCountryInfo) {
+    } else if (value is FlutterCountryInfo) {
       buffer.putUint8(169);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterAvailableIdType) {
+    } else if (value is FlutterAvailableIdType) {
       buffer.putUint8(170);
       writeValue(buffer, value.encode());
-    }    else if (value is FlutterConfig) {
+    } else if (value is FlutterConfig) {
       buffer.putUint8(171);
       writeValue(buffer, value.encode());
     } else {
@@ -2858,96 +2900,99 @@ class _PigeonCodec extends StandardMessageCodec {
   @override
   Object? readValueOfType(int type, ReadBuffer buffer) {
     switch (type) {
-      case 129: 
+      case 129:
         final value = readValue(buffer) as int?;
         return value == null ? null : FlutterJobType.values[value];
-      case 130: 
+      case 130:
         final value = readValue(buffer) as int?;
         return value == null ? null : FlutterJobTypeV2.values[value];
-      case 131: 
+      case 131:
         final value = readValue(buffer) as int?;
         return value == null ? null : FlutterImageType.values[value];
-      case 132: 
+      case 132:
         final value = readValue(buffer) as int?;
         return value == null ? null : FlutterActionResult.values[value];
-      case 133: 
+      case 133:
         final value = readValue(buffer) as int?;
         return value == null ? null : FlutterSmartSelfieStatus.values[value];
-      case 134: 
+      case 134:
         return FlutterConsentInformation.decode(readValue(buffer)!);
-      case 135: 
+      case 135:
         return FlutterPartnerParams.decode(readValue(buffer)!);
-      case 136: 
+      case 136:
         return FlutterAuthenticationRequest.decode(readValue(buffer)!);
-      case 137: 
+      case 137:
         return FlutterAuthenticationResponse.decode(readValue(buffer)!);
-      case 138: 
+      case 138:
         return FlutterPrepUploadRequest.decode(readValue(buffer)!);
-      case 139: 
+      case 139:
         return FlutterPrepUploadResponse.decode(readValue(buffer)!);
-      case 140: 
+      case 140:
         return FlutterUploadRequest.decode(readValue(buffer)!);
-      case 141: 
+      case 141:
         return FlutterUploadImageInfo.decode(readValue(buffer)!);
-      case 142: 
+      case 142:
         return FlutterIdInfo.decode(readValue(buffer)!);
-      case 143: 
+      case 143:
         return FlutterEnhancedKycResponse.decode(readValue(buffer)!);
-      case 144: 
+      case 144:
         return FlutterActions.decode(readValue(buffer)!);
-      case 145: 
+      case 145:
         return FlutterConsentInfo.decode(readValue(buffer)!);
-      case 146: 
+      case 146:
         return FlutterEnhancedKycRequest.decode(readValue(buffer)!);
-      case 147: 
+      case 147:
         return FlutterEnhancedKycAsyncResponse.decode(readValue(buffer)!);
-      case 148: 
+      case 148:
         return FlutterImageLinks.decode(readValue(buffer)!);
-      case 149: 
+      case 149:
         return FlutterJobStatusRequest.decode(readValue(buffer)!);
-      case 150: 
+      case 150:
         return FlutterSmartSelfieJobResult.decode(readValue(buffer)!);
-      case 151: 
+      case 151:
         return FlutterSmartSelfieJobStatusResponse.decode(readValue(buffer)!);
-      case 152: 
+      case 152:
         return FlutterSmartSelfieResponse.decode(readValue(buffer)!);
-      case 153: 
+      case 153:
         return FlutterDocumentVerificationJobResult.decode(readValue(buffer)!);
-      case 154: 
-        return FlutterDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
-      case 155: 
+      case 154:
+        return FlutterDocumentVerificationJobStatusResponse.decode(
+            readValue(buffer)!);
+      case 155:
         return FlutterBiometricKycJobResult.decode(readValue(buffer)!);
-      case 156: 
+      case 156:
         return FlutterBiometricKycJobStatusResponse.decode(readValue(buffer)!);
-      case 157: 
-        return FlutterEnhancedDocumentVerificationJobResult.decode(readValue(buffer)!);
-      case 158: 
-        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(readValue(buffer)!);
-      case 159: 
+      case 157:
+        return FlutterEnhancedDocumentVerificationJobResult.decode(
+            readValue(buffer)!);
+      case 158:
+        return FlutterEnhancedDocumentVerificationJobStatusResponse.decode(
+            readValue(buffer)!);
+      case 159:
         return FlutterProductsConfigRequest.decode(readValue(buffer)!);
-      case 160: 
+      case 160:
         return FlutterProductsConfigResponse.decode(readValue(buffer)!);
-      case 161: 
+      case 161:
         return FlutterIdSelection.decode(readValue(buffer)!);
-      case 162: 
+      case 162:
         return FlutterValidDocumentsResponse.decode(readValue(buffer)!);
-      case 163: 
+      case 163:
         return FlutterValidDocument.decode(readValue(buffer)!);
-      case 164: 
+      case 164:
         return FlutterCountry.decode(readValue(buffer)!);
-      case 165: 
+      case 165:
         return FlutterIdType.decode(readValue(buffer)!);
-      case 166: 
+      case 166:
         return FlutterServicesResponse.decode(readValue(buffer)!);
-      case 167: 
+      case 167:
         return FlutterBankCode.decode(readValue(buffer)!);
-      case 168: 
+      case 168:
         return FlutterHostedWeb.decode(readValue(buffer)!);
-      case 169: 
+      case 169:
         return FlutterCountryInfo.decode(readValue(buffer)!);
-      case 170: 
+      case 170:
         return FlutterAvailableIdType.decode(readValue(buffer)!);
-      case 171: 
+      case 171:
         return FlutterConfig.decode(readValue(buffer)!);
       default:
         return super.readValueOfType(type, buffer);
@@ -2959,23 +3004,28 @@ class SmileIDApi {
   /// Constructor for [SmileIDApi].  The [binaryMessenger] named argument is
   /// available for dependency injection.  If it is left null, the default
   /// BinaryMessenger will be used which routes to the host platform.
-  SmileIDApi({BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
+  SmileIDApi(
+      {BinaryMessenger? binaryMessenger, String messageChannelSuffix = ''})
       : pigeonVar_binaryMessenger = binaryMessenger,
-        pigeonVar_messageChannelSuffix = messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
+        pigeonVar_messageChannelSuffix =
+            messageChannelSuffix.isNotEmpty ? '.$messageChannelSuffix' : '';
   final BinaryMessenger? pigeonVar_binaryMessenger;
 
   static const MessageCodec<Object?> pigeonChannelCodec = _PigeonCodec();
 
   final String pigeonVar_messageChannelSuffix;
 
-  Future<void> initializeWithApiKey(String apiKey, FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithApiKey$pigeonVar_messageChannelSuffix';
+  Future<void> initializeWithApiKey(String apiKey, FlutterConfig config,
+      bool useSandbox, bool enableCrashReporting) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithApiKey$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[apiKey, config, useSandbox, enableCrashReporting]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel
+        .send(<Object?>[apiKey, config, useSandbox, enableCrashReporting]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -2990,14 +3040,17 @@ class SmileIDApi {
     }
   }
 
-  Future<void> initializeWithConfig(FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithConfig$pigeonVar_messageChannelSuffix';
+  Future<void> initializeWithConfig(
+      FlutterConfig config, bool useSandbox, bool enableCrashReporting) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.initializeWithConfig$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[config, useSandbox, enableCrashReporting]);
+    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel
+        .send(<Object?>[config, useSandbox, enableCrashReporting]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3013,13 +3066,15 @@ class SmileIDApi {
   }
 
   Future<void> initialize(bool useSandbox, bool enableCrashReporting) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.initialize$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.initialize$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[useSandbox, enableCrashReporting]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[useSandbox, enableCrashReporting]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3035,13 +3090,15 @@ class SmileIDApi {
   }
 
   Future<void> setCallbackUrl(String callbackUrl) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.setCallbackUrl$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.setCallbackUrl$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[callbackUrl]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[callbackUrl]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3057,13 +3114,15 @@ class SmileIDApi {
   }
 
   Future<void> setAllowOfflineMode(bool allowOfflineMode) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.setAllowOfflineMode$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.setAllowOfflineMode$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[allowOfflineMode]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[allowOfflineMode]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3079,7 +3138,8 @@ class SmileIDApi {
   }
 
   Future<List<String>> getSubmittedJobs() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getSubmittedJobs$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getSubmittedJobs$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
@@ -3106,7 +3166,8 @@ class SmileIDApi {
   }
 
   Future<List<String>> getUnsubmittedJobs() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getUnsubmittedJobs$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getUnsubmittedJobs$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
@@ -3133,13 +3194,15 @@ class SmileIDApi {
   }
 
   Future<void> cleanup(String jobId) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.cleanup$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.cleanup$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[jobId]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[jobId]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3155,13 +3218,15 @@ class SmileIDApi {
   }
 
   Future<void> cleanupJobs(List<String> jobIds) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.cleanupJobs$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.cleanupJobs$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[jobIds]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[jobIds]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3177,13 +3242,15 @@ class SmileIDApi {
   }
 
   Future<void> submitJob(String jobId, bool deleteFilesOnSuccess) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.submitJob$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.submitJob$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[jobId, deleteFilesOnSuccess]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[jobId, deleteFilesOnSuccess]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3198,14 +3265,17 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterAuthenticationResponse> authenticate(FlutterAuthenticationRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.authenticate$pigeonVar_messageChannelSuffix';
+  Future<FlutterAuthenticationResponse> authenticate(
+      FlutterAuthenticationRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.authenticate$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3225,14 +3295,17 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterPrepUploadResponse> prepUpload(FlutterPrepUploadRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.prepUpload$pigeonVar_messageChannelSuffix';
+  Future<FlutterPrepUploadResponse> prepUpload(
+      FlutterPrepUploadRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.prepUpload$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3253,13 +3326,15 @@ class SmileIDApi {
   }
 
   Future<void> upload(String url, FlutterUploadRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.upload$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.upload$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[url, request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[url, request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3274,14 +3349,17 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterEnhancedKycResponse> doEnhancedKyc(FlutterEnhancedKycRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKyc$pigeonVar_messageChannelSuffix';
+  Future<FlutterEnhancedKycResponse> doEnhancedKyc(
+      FlutterEnhancedKycRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKyc$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3301,14 +3379,17 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterEnhancedKycAsyncResponse> doEnhancedKycAsync(FlutterEnhancedKycRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync$pigeonVar_messageChannelSuffix';
+  Future<FlutterEnhancedKycAsyncResponse> doEnhancedKycAsync(
+      FlutterEnhancedKycRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.doEnhancedKycAsync$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3328,14 +3409,17 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieJobStatusResponse> getSmartSelfieJobStatus(FlutterJobStatusRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getSmartSelfieJobStatus$pigeonVar_messageChannelSuffix';
+  Future<FlutterSmartSelfieJobStatusResponse> getSmartSelfieJobStatus(
+      FlutterJobStatusRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getSmartSelfieJobStatus$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3355,14 +3439,35 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(String signature, String timestamp, String selfieImage, List<String> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult, bool? allowNewEnroll) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieEnrollment$pigeonVar_messageChannelSuffix';
+  Future<FlutterSmartSelfieResponse> doSmartSelfieEnrollment(
+      String signature,
+      String timestamp,
+      String selfieImage,
+      List<String> livenessImages,
+      String userId,
+      Map<String?, String?>? partnerParams,
+      String? callbackUrl,
+      int? sandboxResult,
+      bool? allowNewEnroll) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieEnrollment$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[signature, timestamp, selfieImage, livenessImages, userId, partnerParams, callbackUrl, sandboxResult, allowNewEnroll]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[
+      signature,
+      timestamp,
+      selfieImage,
+      livenessImages,
+      userId,
+      partnerParams,
+      callbackUrl,
+      sandboxResult,
+      allowNewEnroll
+    ]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3382,14 +3487,33 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(String signature, String timestamp, String selfieImage, List<String> livenessImages, String userId, Map<String?, String?>? partnerParams, String? callbackUrl, int? sandboxResult) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieAuthentication$pigeonVar_messageChannelSuffix';
+  Future<FlutterSmartSelfieResponse> doSmartSelfieAuthentication(
+      String signature,
+      String timestamp,
+      String selfieImage,
+      List<String> livenessImages,
+      String userId,
+      Map<String?, String?>? partnerParams,
+      String? callbackUrl,
+      int? sandboxResult) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.doSmartSelfieAuthentication$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[signature, timestamp, selfieImage, livenessImages, userId, partnerParams, callbackUrl, sandboxResult]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[
+      signature,
+      timestamp,
+      selfieImage,
+      livenessImages,
+      userId,
+      partnerParams,
+      callbackUrl,
+      sandboxResult
+    ]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3409,14 +3533,17 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterDocumentVerificationJobStatusResponse> getDocumentVerificationJobStatus(FlutterJobStatusRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
+  Future<FlutterDocumentVerificationJobStatusResponse>
+      getDocumentVerificationJobStatus(FlutterJobStatusRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3432,18 +3559,22 @@ class SmileIDApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (pigeonVar_replyList[0] as FlutterDocumentVerificationJobStatusResponse?)!;
+      return (pigeonVar_replyList[0]
+          as FlutterDocumentVerificationJobStatusResponse?)!;
     }
   }
 
-  Future<FlutterBiometricKycJobStatusResponse> getBiometricKycJobStatus(FlutterJobStatusRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getBiometricKycJobStatus$pigeonVar_messageChannelSuffix';
+  Future<FlutterBiometricKycJobStatusResponse> getBiometricKycJobStatus(
+      FlutterJobStatusRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getBiometricKycJobStatus$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3463,14 +3594,18 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterEnhancedDocumentVerificationJobStatusResponse> getEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getEnhancedDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
+  Future<FlutterEnhancedDocumentVerificationJobStatusResponse>
+      getEnhancedDocumentVerificationJobStatus(
+          FlutterJobStatusRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getEnhancedDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3486,18 +3621,22 @@ class SmileIDApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (pigeonVar_replyList[0] as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
+      return (pigeonVar_replyList[0]
+          as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
     }
   }
 
-  Future<FlutterProductsConfigResponse> getProductsConfig(FlutterProductsConfigRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getProductsConfig$pigeonVar_messageChannelSuffix';
+  Future<FlutterProductsConfigResponse> getProductsConfig(
+      FlutterProductsConfigRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getProductsConfig$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3517,14 +3656,17 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterValidDocumentsResponse> getValidDocuments(FlutterProductsConfigRequest request) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getValidDocuments$pigeonVar_messageChannelSuffix';
+  Future<FlutterValidDocumentsResponse> getValidDocuments(
+      FlutterProductsConfigRequest request) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getValidDocuments$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3545,7 +3687,8 @@ class SmileIDApi {
   }
 
   Future<FlutterServicesResponse> getServices() async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.getServices$pigeonVar_messageChannelSuffix';
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.getServices$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
@@ -3571,14 +3714,17 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterSmartSelfieJobStatusResponse> pollSmartSelfieJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollSmartSelfieJobStatus$pigeonVar_messageChannelSuffix';
+  Future<FlutterSmartSelfieJobStatusResponse> pollSmartSelfieJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.pollSmartSelfieJobStatus$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request, interval, numAttempts]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request, interval, numAttempts]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3598,14 +3744,18 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterDocumentVerificationJobStatusResponse> pollDocumentVerificationJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
+  Future<FlutterDocumentVerificationJobStatusResponse>
+      pollDocumentVerificationJobStatus(FlutterJobStatusRequest request,
+          int interval, int numAttempts) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.pollDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request, interval, numAttempts]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request, interval, numAttempts]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3621,18 +3771,22 @@ class SmileIDApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (pigeonVar_replyList[0] as FlutterDocumentVerificationJobStatusResponse?)!;
+      return (pigeonVar_replyList[0]
+          as FlutterDocumentVerificationJobStatusResponse?)!;
     }
   }
 
-  Future<FlutterBiometricKycJobStatusResponse> pollBiometricKycJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollBiometricKycJobStatus$pigeonVar_messageChannelSuffix';
+  Future<FlutterBiometricKycJobStatusResponse> pollBiometricKycJobStatus(
+      FlutterJobStatusRequest request, int interval, int numAttempts) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.pollBiometricKycJobStatus$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request, interval, numAttempts]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request, interval, numAttempts]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3652,14 +3806,18 @@ class SmileIDApi {
     }
   }
 
-  Future<FlutterEnhancedDocumentVerificationJobStatusResponse> pollEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request, int interval, int numAttempts) async {
-    final pigeonVar_channelName = 'dev.flutter.pigeon.smileid.SmileIDApi.pollEnhancedDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
+  Future<FlutterEnhancedDocumentVerificationJobStatusResponse>
+      pollEnhancedDocumentVerificationJobStatus(FlutterJobStatusRequest request,
+          int interval, int numAttempts) async {
+    final pigeonVar_channelName =
+        'dev.flutter.pigeon.smileid.SmileIDApi.pollEnhancedDocumentVerificationJobStatus$pigeonVar_messageChannelSuffix';
     final pigeonVar_channel = BasicMessageChannel<Object?>(
       pigeonVar_channelName,
       pigeonChannelCodec,
       binaryMessenger: pigeonVar_binaryMessenger,
     );
-    final Future<Object?> pigeonVar_sendFuture = pigeonVar_channel.send(<Object?>[request, interval, numAttempts]);
+    final Future<Object?> pigeonVar_sendFuture =
+        pigeonVar_channel.send(<Object?>[request, interval, numAttempts]);
     final pigeonVar_replyList = await pigeonVar_sendFuture as List<Object?>?;
     if (pigeonVar_replyList == null) {
       throw _createConnectionError(pigeonVar_channelName);
@@ -3675,7 +3833,8 @@ class SmileIDApi {
         message: 'Host platform returned null value for non-null return value.',
       );
     } else {
-      return (pigeonVar_replyList[0] as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
+      return (pigeonVar_replyList[0]
+          as FlutterEnhancedDocumentVerificationJobStatusResponse?)!;
     }
   }
 }

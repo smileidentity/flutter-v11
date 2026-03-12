@@ -111,16 +111,14 @@ fun convertNonNullMapToNullable(map: Map<String, String>): Map<String?, String?>
     .mapKeys { it.key }
     .mapValues { it.value }
 
-fun Map<String, String>.toFlutterPartnerParams(): FlutterPartnerParams {
-    return FlutterPartnerParams(
-        jobType = this["job_type"]?.let { FlutterJobType.valueOf(it) },
-        jobId = this["job_id"] ?: "",
-        userId = this["user_id"] ?: "",
-        extras = this.filterKeys { it !in setOf("job_type", "job_id", "user_id") }
-            .takeIf { it.isNotEmpty() }
-            ?.let { convertNonNullMapToNullable(it) },
-    )
-}
+fun Map<String, String>.toFlutterPartnerParams(): FlutterPartnerParams = FlutterPartnerParams(
+    jobType = this["job_type"]?.let { FlutterJobType.valueOf(it) },
+    jobId = this["job_id"] ?: "",
+    userId = this["user_id"] ?: "",
+    extras = this.filterKeys { it !in setOf("job_type", "job_id", "user_id") }
+        .takeIf { it.isNotEmpty() }
+        ?.let { convertNonNullMapToNullable(it) },
+)
 
 fun FlutterJobType.toRequest() = when (this) {
     FlutterJobType.ENHANCED_KYC -> JobType.EnhancedKyc
