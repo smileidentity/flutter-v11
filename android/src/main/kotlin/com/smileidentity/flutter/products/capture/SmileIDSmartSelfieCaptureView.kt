@@ -128,11 +128,12 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                     )
 
                                 else -> RenderSelfieCaptureScreen(
-                                    userId,
-                                    jobId,
-                                    allowAgentMode,
-                                    smileSensitivity,
-                                    viewModel,
+                                    userId = userId,
+                                    jobId = jobId,
+                                    allowAgentMode = allowAgentMode,
+                                    forceAgentMode = forceAgentMode,
+                                    smileSensitivity = smileSensitivity,
+                                    viewModel = viewModel,
                                 )
                             }
                         }
@@ -147,6 +148,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         userId: String,
         jobId: String,
         allowAgentMode: Boolean,
+        forceAgentMode: Boolean,
         smileSensitivity: SmileSensitivity,
         viewModel: SelfieViewModel,
     ) {
@@ -161,6 +163,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                 userId = userId,
                 jobId = jobId,
                 allowAgentMode = allowAgentMode,
+                forceAgentMode = forceAgentMode,
                 allowNewEnroll = true,
                 skipApiSubmission = true,
                 viewModel = viewModel,
