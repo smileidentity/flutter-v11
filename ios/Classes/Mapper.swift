@@ -340,7 +340,7 @@ extension SmartSelfieResponse {
             jobType: jobType.toResponse(),
             message: message,
             partnerId: partnerId,
-            partnerParams: partnerParams,
+            partnerParams: partnerParams.toResponse(),
             status: status.toResponse(),
             updatedAt: updatedAt,
             userId: userId

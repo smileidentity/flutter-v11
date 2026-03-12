@@ -413,7 +413,7 @@ class FlutterSmartSelfieResponse {
   final FlutterJobTypeV2 jobType;
   final String message;
   final String partnerId;
-  final Map<String?, String?>? partnerParams;
+  final FlutterPartnerParams partnerParams;
   final FlutterSmartSelfieStatus status;
   final String updatedAt;
   final String userId;
