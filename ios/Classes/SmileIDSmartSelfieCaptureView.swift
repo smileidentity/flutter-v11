@@ -30,6 +30,8 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
             userId: generateUserId(),
             jobId: generateJobId(),
             allowNewEnroll: false,
+            allowAgentMode: allowAgentMode,
+            forceAgentMode: forceAgentMode,
             skipApiSubmission: true,
             extraPartnerParams: [:]
         )
