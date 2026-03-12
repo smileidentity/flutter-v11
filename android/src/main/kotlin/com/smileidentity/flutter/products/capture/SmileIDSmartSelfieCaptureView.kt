@@ -73,6 +73,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         val showInstructions = args["showInstructions"] as? Boolean ?: true
         val showAttribution = args["showAttribution"] as? Boolean ?: true
         val allowAgentMode = args["allowAgentMode"] as? Boolean ?: true
+        val forceAgentMode = args["forceAgentMode"] as? Boolean ?: false
         val useStrictMode = args["useStrictMode"] as? Boolean ?: false
         var acknowledgedInstructions by rememberSaveable { mutableStateOf(false) }
         val userId = randomUserId()

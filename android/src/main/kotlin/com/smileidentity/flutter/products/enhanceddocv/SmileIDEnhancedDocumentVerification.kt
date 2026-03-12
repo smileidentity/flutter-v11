@@ -62,6 +62,7 @@ internal class SmileIDEnhancedDocumentVerification private constructor(
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
+            forceAgentMode = args["forceAgentMode"] as? Boolean ?: false,
             allowGalleryUpload = args["allowGalleryUpload"] as? Boolean ?: false,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             useStrictMode = args["useStrictMode"] as? Boolean ?: false,
