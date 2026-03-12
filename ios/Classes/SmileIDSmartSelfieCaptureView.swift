@@ -21,6 +21,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
         let showInstructions = args["showInstructions"] as? Bool ?? true
         let showAttribution = args["showAttribution"] as? Bool ?? true
         let allowAgentMode = args["allowAgentMode"] as? Bool ?? true
+        let forceAgentMode = args["forceAgentMode"] as? Bool ?? false
         let useStrictMode = args["useStrictMode"] as? Bool ?? false
         let smileSensitivity = SmileSensitivity.from(args["smileSensitivity"] as? String)
 
@@ -47,6 +48,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
             showConfirmationDialog: showConfirmationDialog,
             showInstructions: showInstructions,
             allowAgentMode: allowAgentMode,
+            forceAgentMode: forceAgentMode,
             showAttribution: showAttribution,
             useStrictMode: useStrictMode,
             smileSensitivity: smileSensitivity,
@@ -66,6 +68,7 @@ struct SmileIDRootView: View {
     let showConfirmationDialog: Bool
     let showInstructions: Bool
     let allowAgentMode: Bool
+    let forceAgentMode: Bool
     let showAttribution: Bool
     let useStrictMode: Bool
     let smileSensitivity: SmileSensitivity
@@ -129,6 +132,7 @@ struct SmileIDRootView: View {
                 SelfieCaptureScreen(
                     viewModel: viewModel,
                     allowAgentMode: allowAgentMode,
+                    forceAgentMode: forceAgentMode,
                     smileSensitivity: smileSensitivity,
                 ).preferredColorScheme(.light)
             }

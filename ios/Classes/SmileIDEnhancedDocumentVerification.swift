@@ -59,6 +59,7 @@ class SmileIDEnhancedDocumentVerification : NSObject, FlutterPlatformView, Enhan
             autoCapture: AutoCapture.from(args["autoCapture"] as? String),
             captureBothSides: args["captureBothSides"] as? Bool ?? true,
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
+            forceAgentMode: args["forceAgentMode"] as? Bool ?? false,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
             skipApiSubmission: args["skipApiSubmission"] as? Bool ?? false,
