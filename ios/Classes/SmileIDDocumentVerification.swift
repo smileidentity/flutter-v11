@@ -37,6 +37,7 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
             autoCapture: AutoCapture.from(args["autoCapture"] as? String),
             captureBothSides: args["captureBothSides"] as? Bool ?? true,
             allowAgentMode: args["allowAgentMode"] as? Bool ?? false,
+            forceAgentMode: args["forceAgentMode"] as? Bool ?? false,
             allowGalleryUpload: args["allowGalleryUpload"] as? Bool ?? false,
             showInstructions: args["showInstructions"] as? Bool ?? true,
             showAttribution: args["showAttribution"] as? Bool ?? true,

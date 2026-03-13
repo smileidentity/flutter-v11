@@ -67,10 +67,12 @@ internal class SmileIDBiometricKYC private constructor(
             jobId = args["jobId"] as? String ?: randomJobId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
+            forceAgentMode = args["forceAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             smileSensitivity = smileSensitivity,
             useStrictMode = args["useStrictMode"] as? Boolean ?: true,
+            skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,
             extraPartnerParams = extraPartnerParams.toImmutableMap(),
         ) {
             when (it) {

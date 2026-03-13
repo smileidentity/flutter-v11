@@ -40,6 +40,7 @@ internal class SmileIDSmartSelfieEnrollment private constructor(
             userId = args["userId"] as? String ?: randomUserId(),
             allowNewEnroll = args["allowNewEnroll"] as? Boolean ?: false,
             allowAgentMode = args["allowAgentMode"] as? Boolean ?: false,
+            forceAgentMode = args["forceAgentMode"] as? Boolean ?: false,
             showAttribution = args["showAttribution"] as? Boolean ?: true,
             showInstructions = args["showInstructions"] as? Boolean ?: true,
             skipApiSubmission = args["skipApiSubmission"] as? Boolean ?: false,

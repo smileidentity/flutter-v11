@@ -73,6 +73,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         val showInstructions = args["showInstructions"] as? Boolean ?: true
         val showAttribution = args["showAttribution"] as? Boolean ?: true
         val allowAgentMode = args["allowAgentMode"] as? Boolean ?: true
+        val forceAgentMode = args["forceAgentMode"] as? Boolean ?: false
         val useStrictMode = args["useStrictMode"] as? Boolean ?: false
         var acknowledgedInstructions by rememberSaveable { mutableStateOf(false) }
         val userId = randomUserId()
@@ -127,11 +128,12 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                                     )
 
                                 else -> RenderSelfieCaptureScreen(
-                                    userId,
-                                    jobId,
-                                    allowAgentMode,
-                                    smileSensitivity,
-                                    viewModel,
+                                    userId = userId,
+                                    jobId = jobId,
+                                    allowAgentMode = allowAgentMode,
+                                    forceAgentMode = forceAgentMode,
+                                    smileSensitivity = smileSensitivity,
+                                    viewModel = viewModel,
                                 )
                             }
                         }
@@ -146,6 +148,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
         userId: String,
         jobId: String,
         allowAgentMode: Boolean,
+        forceAgentMode: Boolean,
         smileSensitivity: SmileSensitivity,
         viewModel: SelfieViewModel,
     ) {
@@ -160,6 +163,7 @@ internal class SmileIDSmartSelfieCaptureView private constructor(
                 userId = userId,
                 jobId = jobId,
                 allowAgentMode = allowAgentMode,
+                forceAgentMode = forceAgentMode,
                 allowNewEnroll = true,
                 skipApiSubmission = true,
                 viewModel = viewModel,
