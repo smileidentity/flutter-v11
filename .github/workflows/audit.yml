@@ -1,0 +1,41 @@
+name: Security Audit
+
+on:
+  pull_request:
+    paths:
+      - 'pubspec.yaml'
+      - 'pubspec.lock'
+      - 'android/*.gradle*'
+      - 'android/**/*.gradle*'
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'
+
+jobs:
+  security-audit:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - name: Run OSV Scanner
+        uses: google/osv-scanner-action/osv-scanner-action@c51854704019a247608d928f370c98740469d4b5 # v2.3.5
+        with:
+          scan-args: |-
+            --recursive
+            --format=table
+            .
+      - name: Create issue on failure
+        if: failure() && github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          EXISTING=$(gh issue list --label "security-audit" --state open --json number --jq 'length')
+          if [ "$EXISTING" -gt 0 ]; then exit 0; fi
+          TITLE_DATE=$(date +%Y-%m-%d)
+          gh issue create \
+            --title "Security: dependency vulnerabilities detected (${TITLE_DATE})" \
+            --label "security-audit,priority:high" \
+            --body "The daily security audit has detected vulnerabilities. See [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details."

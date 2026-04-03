@@ -1,28 +1,28 @@
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 version: 2
 updates:
+  - package-ecosystem: pub
+    open-pull-requests-limit: 0
+    directory: /
+    schedule:
+      interval: weekly
+
+  - package-ecosystem: gradle
+    open-pull-requests-limit: 0
+    directory: /android
+    schedule:
+      interval: weekly
+    groups:
+      agp:
+        patterns:
+          - "com.android.*"
+
   - package-ecosystem: github-actions
-    directory: "/"
+    open-pull-requests-limit: 5
+    directory: /
     schedule:
       interval: weekly
     groups:
       github-actions:
         patterns:
           - '*'
-
-  - package-ecosystem: "pub"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-
-  - package-ecosystem: "gradle"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    groups:
-      # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file#groups
-      # Group updates together, so that they are all applied in a single PR.
-      agp:
-        # We often want to hold off on AGP updates, so bump this separately
-        patterns:
-          - "com.android.*"
