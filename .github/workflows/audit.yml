@@ -34,6 +34,8 @@ jobs:
         run: |
           EXISTING=$(gh issue list --label "security-audit" --state open --json number --jq 'length')
           if [ "$EXISTING" -gt 0 ]; then exit 0; fi
+          gh label create "security-audit" --color "D93F0B" --description "Automated security audit finding" --force || true
+          gh label create "priority:high" --color "B60205" --description "High priority" --force || true
           TITLE_DATE=$(date +%Y-%m-%d)
           gh issue create \
             --title "Security: dependency vulnerabilities detected (${TITLE_DATE})" \

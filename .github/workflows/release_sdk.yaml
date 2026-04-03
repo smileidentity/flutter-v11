@@ -9,6 +9,7 @@ jobs:
   deployment:
     name: Deploy package
     permissions:
+      contents: read
       id-token: write
     runs-on: ubuntu-latest
     steps:
