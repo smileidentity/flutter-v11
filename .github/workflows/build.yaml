@@ -45,7 +45,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get && cd sample && flutter pub get && cd ..
       - name: Lint Android
-        uses: musichin/ktlint-check@e54cf091e2e2a760a623c6ceb9ef5ab5625ae2f6 # v4
+        uses: musichin/ktlint-check@cfe7ae31e0fab752f613bb1d0cf04325f18a2d22 # v4
         with:
           ktlint-version: "1.7.0"
           patterns: |
