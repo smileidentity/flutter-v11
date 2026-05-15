@@ -10,6 +10,12 @@ on:
         description: 'Release tag to publish notes for (used when invoked from CI)'
         required: true
         type: string
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Release tag to publish notes for (e.g. v11.2.10)'
+        required: true
+        type: string
 
 jobs:
   update-docs-release-notes:
