@@ -9,9 +9,11 @@ jobs:
   deployment:
     name: Deploy package
     permissions:
-      contents: read
+      contents: write
       id-token: write
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - uses: dart-lang/setup-dart@65eb853c7ba17dde3be364c3d2858773e7144260 # v1.7.2
@@ -19,5 +21,61 @@ jobs:
         uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           channel: 'stable'
+      - name: Read pubspec version
+        id: version
+        run: |
+          VERSION=$(awk '/^version:/ {print $2; exit}' pubspec.yaml | tr -d '\r' | cut -d'+' -f1)
+          if [ -z "$VERSION" ]; then
+            echo "Could not read version from pubspec.yaml" >&2
+            exit 1
+          fi
+          if ! printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$'; then
+            echo "pubspec version '$VERSION' is not a valid semver" >&2
+            exit 1
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+      - name: Verify tag does not already exist
+        run: |
+          TAG="${{ steps.version.outputs.tag }}"
+          if git ls-remote --exit-code --tags origin "refs/tags/${TAG}" >/dev/null 2>&1; then
+            echo "Tag ${TAG} already exists on origin" >&2
+            exit 1
+          fi
+      - name: Extract changelog for version
+        id: changelog
+        run: |
+          awk -v ver="${{ steps.version.outputs.version }}" '
+            BEGIN { gsub(/\./, "\\.", ver); pattern = "^#+ " ver "([[:space:]]|$)" }
+            $0 ~ pattern { capture=1; next }
+            capture && /^#+ [0-9]+\.[0-9]+\.[0-9]+/ { exit }
+            capture { print }
+          ' CHANGELOG.md > RELEASE_NOTES.md
+          if [ ! -s RELEASE_NOTES.md ]; then
+            echo "No CHANGELOG.md entry found for ${{ steps.version.outputs.version }}" >&2
+            exit 1
+          fi
       - name: Publish package
         run: flutter pub publish -v -f
+      - name: Create and push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.version.outputs.tag }}" -m "${{ steps.version.outputs.tag }}"
+          git push origin "${{ steps.version.outputs.tag }}"
+      - name: Create GitHub release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            --title "${{ steps.version.outputs.tag }}" \
+            --notes-file RELEASE_NOTES.md \
+            --verify-tag
+
+  post-release:
+    name: Post-release actions
+    needs: deployment
+    uses: ./.github/workflows/post_release.yml
+    with:
+      tag_name: ${{ needs.deployment.outputs.tag }}
+    secrets: inherit
