@@ -4,10 +4,18 @@ on:
   release:
     types:
       - created
+  workflow_call:
+    inputs:
+      tag_name:
+        description: 'Release tag to publish notes for (used when invoked from CI)'
+        required: true
+        type: string
 
 jobs:
   update-docs-release-notes:
     runs-on: ubuntu-latest
+    env:
+      RELEASE_TAG: ${{ inputs.tag_name || github.event.release.tag_name }}
     steps:
       - name: Checkout flutter
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -26,9 +34,9 @@ jobs:
         with:
           token: ${{ secrets.GH_PAT }}
           path: docs
-          commit-message: Flutter ${{ github.event.release.tag_name }} Release Notes
-          title: Flutter ${{ github.event.release.tag_name }} Release Notes
+          commit-message: Flutter ${{ env.RELEASE_TAG }} Release Notes
+          title: Flutter ${{ env.RELEASE_TAG }} Release Notes
           body: Automated PR to update the release notes
-          branch: flutter-release-notes-${{ github.event.release.tag_name }}
+          branch: flutter-release-notes-${{ env.RELEASE_TAG }}
           labels: "release-notes"
           team-reviewers: "smileidentity/mobile"
