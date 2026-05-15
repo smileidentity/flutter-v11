@@ -24,9 +24,13 @@ jobs:
       - name: Read pubspec version
         id: version
         run: |
-          VERSION=$(awk '/^version:/ {print $2; exit}' pubspec.yaml)
+          VERSION=$(awk '/^version:/ {print $2; exit}' pubspec.yaml | tr -d '\r' | cut -d'+' -f1)
           if [ -z "$VERSION" ]; then
             echo "Could not read version from pubspec.yaml" >&2
+            exit 1
+          fi
+          if ! printf '%s' "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?$'; then
+            echo "pubspec version '$VERSION' is not a valid semver" >&2
             exit 1
           fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
@@ -42,7 +46,8 @@ jobs:
         id: changelog
         run: |
           awk -v ver="${{ steps.version.outputs.version }}" '
-            $0 ~ "^#+ " ver "([[:space:]]|$)" { capture=1; next }
+            BEGIN { gsub(/\./, "\\.", ver); pattern = "^#+ " ver "([[:space:]]|$)" }
+            $0 ~ pattern { capture=1; next }
             capture && /^#+ [0-9]+\.[0-9]+\.[0-9]+/ { exit }
             capture { print }
           ' CHANGELOG.md > RELEASE_NOTES.md
@@ -64,7 +69,8 @@ jobs:
         run: |
           gh release create "${{ steps.version.outputs.tag }}" \
             --title "${{ steps.version.outputs.tag }}" \
-            --notes-file RELEASE_NOTES.md
+            --notes-file RELEASE_NOTES.md \
+            --verify-tag
 
   post-release:
     name: Post-release actions
