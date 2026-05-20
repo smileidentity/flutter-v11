@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId = "com.smileidentity.flutter.sample"
-        minSdk = 21
+        minSdk = flutter.minSdkVersion
         targetSdk = 36
         versionCode = 1
         versionName = "1.0.0"
