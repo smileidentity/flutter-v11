@@ -48,7 +48,7 @@ android {
         minSdk = 21
 
         // Read version from pubspec.yaml for setWrapperInfo
-        val pubspecYaml = File("../pubspec.yaml")
+        val pubspecYaml = projectDir.resolve("../pubspec.yaml")
         val pubspecText = pubspecYaml.readText()
         val versionLine = Regex("""version:\s*(.+)""").find(pubspecText)
         val version = if (versionLine != null) {
