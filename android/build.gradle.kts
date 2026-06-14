@@ -2,7 +2,7 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
-val kotlinVersion = findProperty("kotlinVersion") as String? ?: "2.2.21"
+val kotlinVersion = findProperty("kotlinVersion") as String? ?: "2.4.0"
 val kotlinCompilerExtension = findProperty("kotlinCompilerExtensionVersion") as String? ?: "1.5.14"
 
 extra.apply {
@@ -10,39 +10,16 @@ extra.apply {
     set("kotlinCompilerExtension", kotlinCompilerExtension)
 }
 
-buildscript {
-    val kotlinVersion = rootProject.findProperty("kotlinVersion") as String? ?: "2.2.21"
-
-    dependencies {
-        if (kotlinVersion.startsWith("2")) {
-            classpath("org.jetbrains.kotlin:compose-compiler-gradle-plugin:$kotlinVersion")
-        } else {
-            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
-        }
-    }
-}
-
-allprojects {
-    repositories {
-        maven {
-            url = uri("https://central.sonatype.com/repository/maven-snapshots/")
-        }
-    }
-}
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-    id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
-}
-
-if (kotlinVersion.startsWith("2")) {
-    apply(plugin = "org.jetbrains.kotlin.plugin.compose")
+    id("org.jetbrains.kotlin.plugin.compose")
+    id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
 }
 
 android {
     namespace = "com.smileidentity.flutter"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 21
@@ -71,10 +48,12 @@ android {
         }
     }
 
+/*
     sourceSets {
         sourceSets["main"].java.srcDirs("src/main/kotlin")
         sourceSets["test"].java.srcDirs("src/test/kotlin")
     }
+*/
 
     lint {
         disable.add("NullSafeMutableLiveData")
@@ -93,18 +72,19 @@ android {
 
 dependencies {
     implementation("com.smileidentity:android-sdk:11.1.11")
-    implementation("androidx.core:core-ktx:1.17.0")
-    implementation(platform("androidx.compose:compose-bom:2025.11.00"))
+    implementation("androidx.core:core-ktx:1.19.0")
+    implementation(platform("androidx.compose:compose-bom:2026.05.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
+    implementation("androidx.activity:activity-compose:1.11.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
     implementation("androidx.fragment:fragment-ktx:1.8.9")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.11.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.5.0")
     implementation("com.google.mlkit:object-detection:17.0.2")
 
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
-    testImplementation("io.mockk:mockk:1.14.6")
+    testImplementation("io.mockk:mockk:1.14.11")
 }
 
 ktlint {

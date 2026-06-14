@@ -1,12 +1,29 @@
 package com.smileidentity.flutter.views
 
 import android.content.Context
+import android.content.ContextWrapper
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.LocalActivityResultRegistryOwner
+import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ProvidedValue
+import androidx.compose.runtime.Recomposer
+import androidx.compose.ui.platform.AndroidUiDispatcher
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.savedstate.SavedStateRegistry
+import androidx.savedstate.SavedStateRegistryController
+import androidx.savedstate.SavedStateRegistryOwner
+import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.smileidentity.SmileID
 import io.flutter.Log
 import io.flutter.plugin.common.BinaryMessenger
@@ -14,6 +31,9 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 /**
  * Base class for hosting Smile ID Composables in Flutter. This class handles flutter<>android
@@ -30,24 +50,69 @@ internal abstract class SmileComposablePlatformView(
     private val methodChannel = MethodChannel(messenger, "${viewTypeId}_$viewId")
 
     /**
-     * Creates a viewModelStore that is scoped to the FlutterView's lifecycle. Otherwise, state gets
-     * shared between multiple FlutterView instances since the default viewModelStore is at the
-     * Activity level and since we don't have a full Compose app or nav graph, the same viewModel
-     * ends up getting re-used
+     * Compose needs a ViewTreeLifecycleOwner / SavedStateRegistryOwner / ViewModelStoreOwner. When a
+     * ComposeView is hosted inside a Flutter platform view, Flutter's FlutterView does not provide
+     * these, so we attach a self-managed owner (scoped per platform view, so view model and
+     * saved-state aren't shared between instances).
      */
-    private val viewModelStoreOwner =
-        object : ViewModelStoreOwner {
-            override val viewModelStore = ViewModelStore()
-        }
+    private val lifecycleOwner = PlatformViewLifecycleOwner()
 
-    private var view: ComposeView? =
-        ComposeView(context).apply {
-            setContent {
-                CompositionLocalProvider(LocalViewModelStoreOwner provides viewModelStoreOwner) {
-                    Content(args)
+    /**
+     * By default a ComposeView lazily creates a *window-scoped* Recomposer when it attaches. That
+     * code walks up the view tree to the root (here, the FlutterView) and requires a
+     * ViewTreeLifecycleOwner *on that root* — which Flutter does not set, causing a hard
+     * "ViewTreeLifecycleOwner not found from FlutterView" crash (SIGABRT) that owners set on the
+     * ComposeView itself cannot fix (the lookup walks upward, not down). To avoid that path entirely
+     * we create our own Recomposer driven by the Android UI dispatcher and install it as the
+     * ComposeView's parent composition context, so getWindowRecomposer() is never invoked.
+     */
+    private val recomposeScope = CoroutineScope(AndroidUiDispatcher.CurrentThread)
+    private val recomposer = Recomposer(AndroidUiDispatcher.CurrentThread)
+
+    private var view: ComposeView? = null
+
+    init {
+        // The host ComponentActivity (FlutterActivity) implements ActivityResultRegistryOwner and
+        // OnBackPressedDispatcherOwner. Smile ID's capture screens need these composition locals
+        // (e.g. Accompanist's rememberPermissionState -> rememberLauncherForActivityResult), but a
+        // bare ComposeView in a Flutter platform view does not provide them, so we supply them here.
+        val componentActivity = context.findComponentActivity()
+
+        recomposeScope.launch { recomposer.runRecomposeAndApplyChanges() }
+        view =
+            ComposeView(context).apply {
+                setViewTreeLifecycleOwner(lifecycleOwner)
+                setViewTreeViewModelStoreOwner(lifecycleOwner)
+                setViewTreeSavedStateRegistryOwner(lifecycleOwner)
+                lifecycleOwner.onResume()
+                setParentCompositionContext(recomposer)
+                // We own the recomposer, so dispose the composition on detach rather than relying on
+                // the (absent) view-tree lifecycle.
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnDetachedFromWindow)
+                setContent {
+                    val providedValues = buildList {
+                        add(LocalViewModelStoreOwner provides lifecycleOwner)
+                        if (componentActivity != null) {
+                            add(LocalActivityResultRegistryOwner provides componentActivity)
+                            add(LocalOnBackPressedDispatcherOwner provides componentActivity)
+                        }
+                    }
+                    CompositionLocalProvider(*providedValues.toTypedArray<ProvidedValue<*>>()) {
+                        Content(args)
+                    }
                 }
             }
+    }
+
+    /** Walks up the context wrapper chain to find the host [ComponentActivity], if any. */
+    private fun Context.findComponentActivity(): ComponentActivity? {
+        var current: Context? = this
+        while (current is ContextWrapper) {
+            if (current is ComponentActivity) return current
+            current = current.baseContext
         }
+        return null
+    }
 
     /**
      * Implement this method to provide the actual Composable content for the view
@@ -108,8 +173,49 @@ internal abstract class SmileComposablePlatformView(
     override fun getView() = view
 
     override fun dispose() {
+        // Tear down our recomposer and its coroutine scope, then move the lifecycle to DESTROYED.
+        recomposer.cancel()
+        recomposeScope.cancel()
+        lifecycleOwner.onDestroy()
         // Clear references to the view to avoid memory leaks
         view = null
+    }
+}
+
+/**
+ * A minimal self-managed [LifecycleOwner] / [ViewModelStoreOwner] / [SavedStateRegistryOwner] used
+ * to satisfy Compose's view-tree owner requirements when a ComposeView is hosted inside a Flutter
+ * platform view (Flutter does not provide these owners itself).
+ */
+private class PlatformViewLifecycleOwner :
+    LifecycleOwner,
+    ViewModelStoreOwner,
+    SavedStateRegistryOwner {
+    private val lifecycleRegistry = LifecycleRegistry(this)
+    private val store = ViewModelStore()
+    private val savedStateRegistryController = SavedStateRegistryController.create(this)
+
+    override val lifecycle: Lifecycle
+        get() = lifecycleRegistry
+
+    override val viewModelStore: ViewModelStore
+        get() = store
+
+    override val savedStateRegistry: SavedStateRegistry
+        get() = savedStateRegistryController.savedStateRegistry
+
+    init {
+        savedStateRegistryController.performRestore(null)
+        lifecycleRegistry.currentState = Lifecycle.State.CREATED
+    }
+
+    fun onResume() {
+        lifecycleRegistry.currentState = Lifecycle.State.RESUMED
+    }
+
+    fun onDestroy() {
+        lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
+        store.clear()
     }
 }
 

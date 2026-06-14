@@ -3,13 +3,17 @@ pluginManagement {
         google()
         mavenCentral()
         gradlePluginPortal()
+        maven { url = uri("https://central.sonatype.com/repository/maven-snapshots/") }
     }
     plugins {
-        id("com.android.library") version "8.9.2"
-        id("org.jetbrains.kotlin.android") version "2.2.21"
-        id("org.jetbrains.kotlin.plugin.compose") version "2.2.21"
-        id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
+        id("com.android.library") version "9.2.1"
+        id("org.jetbrains.kotlin.android") version "2.4.0"
+        id("org.jetbrains.kotlin.plugin.compose") version "2.4.0"
+        id("org.jlleitschuh.gradle.ktlint") version "14.2.0"
     }
+}
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 dependencyResolutionManagement {
