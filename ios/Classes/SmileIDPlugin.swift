@@ -151,12 +151,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterAuthenticationRequest,
         completion: @escaping (Result<FlutterAuthenticationResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response = try await SmileID.api.authenticate(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -165,12 +166,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterPrepUploadRequest,
         completion: @escaping (Result<FlutterPrepUploadResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response = try await SmileID.api.prepUpload(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -180,13 +182,14 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterUploadRequest,
         completion: @escaping (Result<Void, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let zipData = try request.toRequest()
                 try await SmileID.api.upload(zip: zipData, to: url)
-                completion(.success(()))
+                reply(.success(()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -195,12 +198,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterEnhancedKycRequest,
         completion: @escaping (Result<FlutterEnhancedKycResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response = try await SmileID.api.doEnhancedKyc(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -209,12 +213,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterEnhancedKycRequest,
         completion: @escaping (Result<FlutterEnhancedKycAsyncResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response = try await SmileID.api.doEnhancedKycAsync(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -231,6 +236,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         allowNewEnroll: Bool?,
         completion: @escaping (Result<FlutterSmartSelfieResponse, any Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response = try await SmileID.api.doSmartSelfieEnrollment(
@@ -253,9 +259,9 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     allowNewEnroll: allowNewEnroll,
                     failureReason: nil
                 )
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -271,6 +277,7 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         sandboxResult: Int64?,
         completion: @escaping (Result<FlutterSmartSelfieResponse, any Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response = try await SmileID.api.doSmartSelfieAuthentication(
@@ -292,9 +299,9 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                     sandboxResult: sandboxResult.map { Int($0) },
                     failureReason: nil
                 )
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -303,12 +310,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterSmartSelfieJobStatusResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response: SmartSelfieJobStatusResponse = try await SmileID.api.getJobStatus(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -317,12 +325,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterDocumentVerificationJobStatusResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response: DocumentVerificationJobStatusResponse = try await SmileID.api.getJobStatus(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -331,12 +340,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterBiometricKycJobStatusResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response: BiometricKycJobStatusResponse = try await SmileID.api.getJobStatus(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -345,12 +355,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterJobStatusRequest,
         completion: @escaping (Result<FlutterEnhancedDocumentVerificationJobStatusResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response: EnhancedDocumentVerificationJobStatusResponse = try await SmileID.api.getJobStatus(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -359,12 +370,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterProductsConfigRequest,
         completion: @escaping (Result<FlutterProductsConfigResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response = try await SmileID.api.getProductsConfig(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -373,12 +385,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         request: FlutterProductsConfigRequest,
         completion: @escaping (Result<FlutterValidDocumentsResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response = try await SmileID.api.getValidDocuments(request: request.toRequest())
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -386,12 +399,13 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
     func getServices(
         completion: @escaping (Result<FlutterServicesResponse, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let response = try await SmileID.api.getServices()
-                completion(.success(response.toResponse()))
+                reply(.success(response.toResponse()))
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }
@@ -491,11 +505,12 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
         numAttempts: Int64,
         completion: @escaping (Result<JobStatusResponse<T>, Error>) -> Void
     ) {
+        let reply = platformThreadReply(completion)
         Task {
             do {
                 let timeInterval = convertToTimeInterval(milliSeconds: interval)
                 guard let numAttemptsInt = Int(exactly: numAttempts) else {
-                    completion(.failure(NSError(domain: "Invalid numAttempts value", code: -1, userInfo: nil)))
+                    reply(.failure(NSError(domain: "Invalid numAttempts value", code: -1, userInfo: nil)))
                     return
                 }
 
@@ -507,12 +522,12 @@ public class SmileIDPlugin: NSObject, FlutterPlugin, SmileIDApi {
                 }
 
                 if let finalResult = result {
-                    completion(.success(finalResult))
+                    reply(.success(finalResult))
                 } else {
-                    completion(.failure(NSError(domain: "Polling completed without a result", code: -1, userInfo: nil)))
+                    reply(.failure(NSError(domain: "Polling completed without a result", code: -1, userInfo: nil)))
                 }
             } catch {
-                completion(.failure(error))
+                reply(.failure(error))
             }
         }
     }

@@ -43,7 +43,6 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
     }
 
     func didSucceed(selfieImage: URL, livenessImages: [URL], apiResponse: SmartSelfieResponse?) {
-        _childViewController?.removeFromParent()
         let successData = SmartSelfieSuccessData(
             selfieFile: selfieImage.absoluteString,
             livenessFiles: livenessImages.map {
@@ -51,15 +50,20 @@ class SmileIDSmartSelfieEnrollment : NSObject, FlutterPlatformView, SmartSelfieR
             },
             apiResponse: apiResponse
         )
-
-        if let jsonString = successData.toJSONString() {
-            _channel.invokeMethod("onSuccess", arguments: jsonString)
+        let jsonString = successData.toJSONString()
+        onPlatformThread {
+            self._childViewController?.removeFromParent()
+            if let jsonString = jsonString {
+                self._channel.invokeMethod("onSuccess", arguments: jsonString)
+            }
         }
     }
 
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
-        _channel.invokeMethod("onError", arguments: error.localizedDescription)
+        onPlatformThread {
+            self._channel.invokeMethod("onError", arguments: error.localizedDescription)
+        }
     }
 
     class Factory : NSObject, FlutterPlatformViewFactory {

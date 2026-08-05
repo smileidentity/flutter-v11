@@ -1,6 +1,30 @@
 import Foundation
 import SmileID
 
+/// Runs `work` on the platform (main) thread, synchronously when already there.
+///
+/// Everything this wrapper does with a native result has to happen on the platform thread: a
+/// `FlutterMethodChannel` message sent from any other thread is undefined ("Platform channel
+/// messages must be sent on the platform thread", per the engine's own diagnostic), and detaching
+/// the hosting view controller is UIKit. The native SDK does not contract which queue it calls
+/// back on — a result produced inside a submission `Task` arrives on a cooperative-pool thread —
+/// so the hop belongs here rather than being assumed.
+///
+/// Staying synchronous when already on the main thread keeps the ordering unchanged for the
+/// callbacks that already arrive there.
+func onPlatformThread(_ work: @escaping () -> Void) {
+    if Thread.isMainThread {
+        work()
+    } else {
+        DispatchQueue.main.async(execute: work)
+    }
+}
+
+/// Wraps a Pigeon completion so its reply crosses the channel on the platform thread.
+func platformThreadReply<T>(_ completion: @escaping (Result<T, Error>) -> Void) -> (Result<T, Error>) -> Void {
+    { result in onPlatformThread { completion(result) } }
+}
+
 extension String {
     func isValidUrl() -> Bool {
         if let url = URL(string: self) {

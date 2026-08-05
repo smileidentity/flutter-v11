@@ -56,7 +56,6 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
     }
     
     func didSucceed(selfie: URL, documentFrontImage: URL, documentBackImage: URL?, didSubmitDocumentVerificationJob: Bool) {
-        _childViewController?.removeFromParent()
         let arguments: [String: Any] = [
             "selfieFile": selfie.absoluteString,
             "documentFrontFile": documentFrontImage.absoluteString,
@@ -64,8 +63,12 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                _channel.invokeMethod("onSuccess", arguments: jsonString)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            onPlatformThread {
+                self._childViewController?.removeFromParent()
+                if let jsonString = jsonString {
+                    self._channel.invokeMethod("onSuccess", arguments: jsonString)
+                }
             }
         } catch {
             didError(error: error)
@@ -74,7 +77,9 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
 
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
-        _channel.invokeMethod("onError", arguments: error.localizedDescription)
+        onPlatformThread {
+            self._channel.invokeMethod("onError", arguments: error.localizedDescription)
+        }
     }
 
     class Factory : NSObject, FlutterPlatformViewFactory {
