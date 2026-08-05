@@ -68,6 +68,8 @@ class SmileIDDocumentVerification : NSObject, FlutterPlatformView, DocumentVerif
                 self._childViewController?.removeFromParent()
                 if let jsonString = jsonString {
                     self._channel.invokeMethod("onSuccess", arguments: jsonString)
+                } else {
+                    self._channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
                 }
             }
         } catch {

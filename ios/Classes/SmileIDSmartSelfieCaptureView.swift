@@ -168,6 +168,8 @@ struct SmileIDRootView: View {
             onPlatformThread {
                 if let jsonString = jsonString {
                     channel.invokeMethod("onSuccess", arguments: jsonString)
+                } else {
+                    channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
                 }
             }
         } catch {
@@ -200,6 +202,8 @@ extension SmileIDRootView: SmartSelfieResultDelegate {
             onPlatformThread {
                 if let jsonString = jsonString {
                     channel.invokeMethod("onSuccess", arguments: jsonString)
+                } else {
+                    channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
                 }
             }
         } catch {

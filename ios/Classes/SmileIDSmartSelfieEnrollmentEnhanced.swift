@@ -52,6 +52,8 @@ class SmileIDSmartSelfieEnrollmentEnhanced: NSObject, FlutterPlatformView, Smart
             self._childViewController?.removeFromParent()
             if let jsonString = jsonString {
                 self._channel.invokeMethod("onSuccess", arguments: jsonString)
+            } else {
+                self._channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
             }
         }
     }

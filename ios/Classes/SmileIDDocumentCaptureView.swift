@@ -114,6 +114,8 @@ struct SmileIDDocumentRootView: View {
                 onPlatformThread {
                     if let jsonString = jsonString {
                         channel.invokeMethod("onSuccess", arguments: jsonString)
+                    } else {
+                        channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
                     }
                 }
             } catch {
@@ -149,6 +151,8 @@ struct SmileIDDocumentRootView: View {
             onPlatformThread {
                 if let jsonString = jsonString {
                     channel.invokeMethod("onSuccess", arguments: jsonString)
+                } else {
+                    channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
                 }
             }
         } catch {

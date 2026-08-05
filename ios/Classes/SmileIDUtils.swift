@@ -25,6 +25,12 @@ func platformThreadReply<T>(_ completion: @escaping (Result<T, Error>) -> Void) 
     { result in onPlatformThread { completion(result) } }
 }
 
+/// Reported when a result cannot be serialised for the channel.
+///
+/// Every callback has to end in `onSuccess` or `onError`: a result the wrapper cannot encode and
+/// therefore drops leaves the caller waiting on a future that never completes.
+let resultEncodingErrorMessage = "Failed to encode the capture result"
+
 extension String {
     func isValidUrl() -> Bool {
         if let url = URL(string: self) {
