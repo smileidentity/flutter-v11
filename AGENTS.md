@@ -32,6 +32,54 @@ opposites.
 - **Fix behaviour natively, not in Dart.** If a flow misbehaves, the fix almost certainly belongs
   in the native SDK; wrapping around it here creates divergence between platforms.
 
+## Pull Requests
+
+- **Lead every commit subject and PR title with one well-chosen emoji**, picked for the
+  change's story (🐛 fix · ⚡ perf · 🧹 refactor · 🧰 CI · 📝 docs · 🔒 hardening ·
+  🎥 capture are cues, not a fixed table), placed before the conventional-commit type —
+  e.g. `🐛 fix(camera): stop the preview freezing on resume`. Shuffle it across commits
+  and PRs; two consecutive sharing a lead emoji is a smell. PR titles describe the
+  outcome, not the change type: `<emoji> <scope>: <what changed — why it matters>`.
+  (Borrowed from the v12 repos' convention.)
+- **Every PR description follows the same shape.** Fill in
+  `.github/pull_request_template.md` — don't invent headings. Put a gif on its own line
+  **immediately after the `Story:` line, before `## Summary`**; `## Screenshot` is for
+  real screenshots, or `N/A` when there are no UI changes. Write the prose in
+  `govuk-style` — plain English, active voice, sentence case, short bullets, and no bold
+  or italics for emphasis. State shortcomings in `## Known Issues` rather than burying
+  them in the summary. For the gif, prefer the `GIPHY_API_KEY` from the environment or
+  `~/.claude/settings.json`; if Giphy is genuinely unreachable, say so in the
+  description rather than leaving a broken image. Never echo, log or commit the key
+  itself — read it in-process, and if it is missing, skip the gif rather than pasting
+  credentials anywhere.
+- **A PR is not finished when it is opened.** After raising one, pull its review
+  comments (`gh api --paginate repos/<owner>/<repo>/pulls/<n>/comments` for inline
+  threads — `--paginate`, or busy PRs silently lose comments past the first page — and
+  `gh pr view <n> --json reviews,comments` for the rest) and work them to a close: fix
+  what is real, reply on the thread saying what changed and how you verified it, then
+  resolve the thread — resolution is GraphQL-only: look the thread ids up via the
+  `pullRequest.reviewThreads` query, then call the `resolveReviewThread` mutation
+  (`gh api graphql -f query='mutation { resolveReviewThread(input: {threadId: "<id>"}) { thread { isResolved } } }'`). Say so plainly when a comment is wrong or does not apply, and
+  resolve it with that reasoning — silence reads as an unaddressed finding. Do the same
+  for automated reviewers and scan bots; if a finding is a false positive, prove it (run
+  the tool yourself) rather than asserting it. Check again after each push, since new
+  commits attract new comments and can dismiss a prior approval.
+- **Use the shared PR skills when they're installed.** Smile Identity's shared agent
+  skills (`smileidentity/claude-skills`, linked into `~/.claude/skills/` and
+  `~/.agents/skills/`) automate the loop above — `create-pr` opens a PR for the current
+  branch with an auto-generated description (and a gif); `pr-analysis` triages the PR's
+  review comments with you, implements the fixes, and updates the PR. Prefer them to
+  hand-rolled `gh` calls so every repo gets the same PR shape. **Run both in the main
+  session — never hand them to a subagent, a fork, or a worktree.** They act on whatever
+  branch and working tree the session is sitting on, and `pr-analysis` decides what to
+  fix by asking you; a delegated run reads the wrong tree and answers its own triage
+  questions unsupervised. They don't override the rules above: check that the title
+  `create-pr` proposes leads with an emoji, and work the comment loop to a close even if
+  `pr-analysis` stops early. **They are optional** — if a skill isn't installed on the
+  machine, skip it and follow the rules directly rather than installing anything
+  mid-task. Check whether they are installed before deciding they aren't — a hand-rolled
+  `gh pr create` silently skips the template, the review, and the gif.
+
 ## Commands
 
 ```bash
