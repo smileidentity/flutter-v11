@@ -1,5 +1,11 @@
 # Release Notes
 
+### Unreleased
+
+### Fixed
+* `SmileIDSmartSelfieCaptureView` with `useStrictMode: true` no longer loses the captured selfie on iOS. The user id the capture was filed under was regenerated every time the view redrew, so a redraw between capture and submission left the SDK looking for the selfie and liveness images in a directory that had never been written to, surfacing as a file-not-found error. The id is now fixed for the life of the capture.
+* iOS results are now always handed to Dart on the platform thread. Capture results and API replies were forwarded from whichever thread the native SDK or the network call finished on, which Flutter does not allow for platform channel messages — depending on the host app's build settings that could crash the app after a capture completed, even though the job itself submitted successfully.
+
 ### 11.2.10 - May 15, 2026
 
 ### Changed
