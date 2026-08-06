@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.smileidentity.SmileID
+import com.smileidentity.flutter.utils.SmileIDInitializationState
 import com.smileidentity.flutter.utils.isSmileIDInitialized
 import io.flutter.Log
 import io.flutter.plugin.common.BinaryMessenger
@@ -20,12 +21,12 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeoutOrNull
 
 /**
  * Base class for hosting Smile ID Composables in Flutter. This class handles flutter<>android
@@ -66,29 +67,35 @@ internal abstract class SmileComposablePlatformView(
      * state (file save paths) during frame analysis and crash the host app with
      * `UninitializedPropertyAccessException` if composed while the SDK is uninitialized — e.g.
      * when initialization failed silently, is still in flight, or never re-ran after the OS
-     * killed and restored the process. Initialization is polled briefly to tolerate an in-flight
-     * initialize; if it does not complete, the failure is delivered through [onError] instead of
-     * crashing.
+     * killed and restored the process. Initialization is polled off the main thread; a recorded
+     * native failure (or a timeout) is delivered through [onError] instead of crashing. Polling
+     * continues after the error so a late-completing initialize still brings the screen up.
      */
     @Composable
     private fun ContentWhenInitialized(args: Map<String, Any?>) {
-        var initialized by remember { mutableStateOf(isSmileIDInitialized()) }
+        var initialized by remember { mutableStateOf(false) }
         LaunchedEffect(Unit) {
-            if (!initialized) {
-                val becameInitialized =
-                    withContext(Dispatchers.IO) {
-                        withTimeoutOrNull(INITIALIZATION_TIMEOUT) {
-                            while (!isSmileIDInitialized()) {
-                                delay(INITIALIZATION_POLL_INTERVAL)
-                            }
-                            true
-                        }
-                    }
-                if (becameInitialized == true) {
+            var elapsed = Duration.ZERO
+            var errorDelivered = false
+            while (!initialized) {
+                if (withContext(Dispatchers.IO) { isSmileIDInitialized() }) {
                     initialized = true
-                } else {
-                    onError(IllegalStateException(NOT_INITIALIZED_MESSAGE))
+                    break
                 }
+                if (!errorDelivered) {
+                    val nativeFailure = SmileIDInitializationState.lastError
+                    if (nativeFailure != null) {
+                        onError(nativeFailure)
+                        errorDelivered = true
+                    } else if (elapsed >= INITIALIZATION_TIMEOUT) {
+                        onError(IllegalStateException(NOT_INITIALIZED_MESSAGE))
+                        errorDelivered = true
+                    }
+                }
+                val interval =
+                    if (errorDelivered) POST_ERROR_POLL_INTERVAL else INITIALIZATION_POLL_INTERVAL
+                delay(interval)
+                elapsed += interval
             }
         }
         if (initialized) {
@@ -164,6 +171,7 @@ internal abstract class SmileComposablePlatformView(
 
 private val INITIALIZATION_TIMEOUT = 5.seconds
 private val INITIALIZATION_POLL_INTERVAL = 200.milliseconds
+private val POST_ERROR_POLL_INTERVAL = 1.seconds
 private const val NOT_INITIALIZED_MESSAGE =
     "Smile ID SDK has not been initialized. Call SmileID.initialize and await the returned " +
         "Future (handling any error) before showing a Smile ID screen."

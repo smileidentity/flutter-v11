@@ -62,8 +62,8 @@ Phases tab as shown below.
 #### 3. Initialization
 
 Initialize the Smile ID SDK in `main.dart` by calling `initialize`, and await the
-returned `Future` before showing any Smile ID screens — if initialization fails, the
-`Future` completes with the error instead of the failure being silently dropped:
+returned `Future` before showing any Smile ID screens — on Android, an initialization
+failure completes the `Future` with the error instead of being silently dropped:
 
 ```dart
 import 'package:smile_id/smile_id.dart';

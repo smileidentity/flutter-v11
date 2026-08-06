@@ -9,9 +9,13 @@ class SmileID {
   static SmileIDApi platformInterface = SmileIDApi();
   static SmileIDService api = SmileIDService(platformInterface);
 
-  /// Initializes the SDK with an API key. The returned [Future] completes
-  /// with an error if native initialization fails; await it (and handle
-  /// errors) before showing any Smile ID screens.
+  /// Initializes the SDK with an API key. Await the returned [Future] before
+  /// showing any Smile ID screens.
+  ///
+  /// On Android the native SDK runs this initialization asynchronously, so the
+  /// [Future] can complete while initialization is still in flight; a failure
+  /// is delivered through the next Smile ID screen's `onError` callback. On
+  /// iOS the native SDK does not currently report initialization failures.
   static Future<void> initializeWithApiKey(
       {required String apiKey,
       required FlutterConfig config,
@@ -21,9 +25,12 @@ class SmileID {
         apiKey, config, useSandbox, enableCrashReporting);
   }
 
-  /// Initializes the SDK with a [FlutterConfig]. The returned [Future]
-  /// completes with an error if native initialization fails; await it (and
-  /// handle errors) before showing any Smile ID screens.
+  /// Initializes the SDK with a [FlutterConfig]. Await the returned [Future]
+  /// (and handle errors) before showing any Smile ID screens.
+  ///
+  /// On Android the [Future] completes with an error if native initialization
+  /// fails. On iOS the native SDK does not currently report initialization
+  /// failures through this [Future].
   static Future<void> initializeWithConfig(
       {required FlutterConfig config,
       required bool useSandbox,
@@ -33,9 +40,12 @@ class SmileID {
   }
 
   /// Initializes the SDK from the `smile_config.json` bundled with the app.
-  /// The returned [Future] completes with an error if native initialization
-  /// fails (e.g. the config file is missing); await it (and handle errors)
-  /// before showing any Smile ID screens.
+  /// Await the returned [Future] (and handle errors) before showing any
+  /// Smile ID screens.
+  ///
+  /// On Android the [Future] completes with an error if native initialization
+  /// fails (e.g. the config file is missing). On iOS the native SDK does not
+  /// currently report initialization failures through this [Future].
   static Future<void> initialize(
       {required bool useSandbox, required bool enableCrashReporting}) {
     return platformInterface.initialize(useSandbox, enableCrashReporting);

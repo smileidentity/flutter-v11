@@ -36,6 +36,7 @@ import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieAuthe
 import com.smileidentity.flutter.products.enhancedselfie.SmileIDSmartSelfieEnrollmentEnhanced
 import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieAuthentication
 import com.smileidentity.flutter.products.selfie.SmileIDSmartSelfieEnrollment
+import com.smileidentity.flutter.utils.SmileIDInitializationState
 import com.smileidentity.metadata.models.WrapperSdkName
 import com.smileidentity.networking.asFormDataPart
 import com.smileidentity.networking.pollBiometricKycJobStatus
@@ -51,6 +52,7 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -132,35 +134,50 @@ class SmileIDPlugin :
         config: FlutterConfig,
         useSandbox: Boolean,
         enableCrashReporting: Boolean,
-    ) {
+    ) = trackInitialization(
         SmileID.initialize(
             context = context,
             apiKey = apiKey,
             config = config.toRequest(),
             useSandbox = useSandbox,
             enableCrashReporting = enableCrashReporting,
-        )
-    }
+        ),
+    )
 
     override fun initializeWithConfig(
         config: FlutterConfig,
         useSandbox: Boolean,
         enableCrashReporting: Boolean,
-    ) {
+    ) = trackInitialization(
         SmileID.initialize(
             context = context,
             config = config.toRequest(),
             useSandbox = useSandbox,
             enableCrashReporting = enableCrashReporting,
-        )
-    }
+        ),
+    )
 
-    override fun initialize(useSandbox: Boolean, enableCrashReporting: Boolean) {
-        SmileID.initialize(
-            context = context,
-            useSandbox = useSandbox,
-            enableCrashReporting = enableCrashReporting,
+    override fun initialize(useSandbox: Boolean, enableCrashReporting: Boolean) =
+        trackInitialization(
+            SmileID.initialize(
+                context = context,
+                useSandbox = useSandbox,
+                enableCrashReporting = enableCrashReporting,
+            ),
         )
+
+    /**
+     * The native SDK reports part of its initialization asynchronously via the returned
+     * [Deferred] (the API-key overload runs its entire body that way), which the synchronous
+     * platform channel cannot propagate. The failure is recorded so capture views can deliver
+     * the actual cause through their onError callback.
+     */
+    private fun trackInitialization(deferred: Deferred<Result<Unit>>) {
+        SmileIDInitializationState.lastError = null
+        scope.launch {
+            runCatching { deferred.await().getOrThrow() }
+                .onFailure { SmileIDInitializationState.lastError = it }
+        }
     }
 
     override fun setCallbackUrl(callbackUrl: String) {
