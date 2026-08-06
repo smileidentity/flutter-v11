@@ -49,9 +49,12 @@ opposites.
   or italics for emphasis. State shortcomings in `## Known Issues` rather than burying
   them in the summary. For the gif, prefer the `GIPHY_API_KEY` from the environment or
   `~/.claude/settings.json`; if Giphy is genuinely unreachable, say so in the
-  description rather than leaving a broken image.
+  description rather than leaving a broken image. Never echo, log or commit the key
+  itself — read it in-process, and if it is missing, skip the gif rather than pasting
+  credentials anywhere.
 - **A PR is not finished when it is opened.** After raising one, pull its review
-  comments (`gh api repos/smileidentity/flutter-v11/pulls/<n>/comments` for inline threads,
+  comments (`gh api --paginate repos/<owner>/<repo>/pulls/<n>/comments` for inline
+  threads — `--paginate`, or busy PRs silently lose comments past the first page — and
   `gh pr view <n> --json reviews,comments` for the rest) and work them to a close: fix
   what is real, reply on the thread saying what changed and how you verified it, then
   resolve the thread. Say so plainly when a comment is wrong or does not apply, and
