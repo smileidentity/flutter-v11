@@ -9,26 +9,46 @@ class SmileID {
   static SmileIDApi platformInterface = SmileIDApi();
   static SmileIDService api = SmileIDService(platformInterface);
 
-  static void initializeWithApiKey(
+  /// Initializes the SDK with an API key. Await the returned [Future] before
+  /// showing any Smile ID screens.
+  ///
+  /// On Android the native SDK runs this initialization asynchronously, so the
+  /// [Future] can complete while initialization is still in flight; a failure
+  /// is delivered through the next Smile ID screen's `onError` callback. On
+  /// iOS the native SDK does not currently report initialization failures.
+  static Future<void> initializeWithApiKey(
       {required String apiKey,
       required FlutterConfig config,
       required bool useSandbox,
       required bool enableCrashReporting}) {
-    platformInterface.initializeWithApiKey(
+    return platformInterface.initializeWithApiKey(
         apiKey, config, useSandbox, enableCrashReporting);
   }
 
-  static void initializeWithConfig(
+  /// Initializes the SDK with a [FlutterConfig]. Await the returned [Future]
+  /// (and handle errors) before showing any Smile ID screens.
+  ///
+  /// On Android the [Future] completes with an error if native initialization
+  /// fails. On iOS the native SDK does not currently report initialization
+  /// failures through this [Future].
+  static Future<void> initializeWithConfig(
       {required FlutterConfig config,
       required bool useSandbox,
       required bool enableCrashReporting}) {
-    platformInterface.initializeWithConfig(
+    return platformInterface.initializeWithConfig(
         config, useSandbox, enableCrashReporting);
   }
 
-  static void initialize(
+  /// Initializes the SDK from the `smile_config.json` bundled with the app.
+  /// Await the returned [Future] (and handle errors) before showing any
+  /// Smile ID screens.
+  ///
+  /// On Android the [Future] completes with an error if native initialization
+  /// fails (e.g. the config file is missing). On iOS the native SDK does not
+  /// currently report initialization failures through this [Future].
+  static Future<void> initialize(
       {required bool useSandbox, required bool enableCrashReporting}) {
-    platformInterface.initialize(useSandbox, enableCrashReporting);
+    return platformInterface.initialize(useSandbox, enableCrashReporting);
   }
 
   static void setCallbackUrl({required Uri callbackUrl}) {

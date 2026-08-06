@@ -61,12 +61,22 @@ Phases tab as shown below.
 
 #### 3. Initialization
 
-Initialize the Smile ID SDK in `main.dart` by calling `initialize`
+Initialize the Smile ID SDK in `main.dart` by calling `initialize`, and await the
+returned `Future` before showing any Smile ID screens — on Android, an initialization
+failure completes the `Future` with the error instead of being silently dropped:
 
 ```dart
 import 'package:smile_id/smile_id.dart';
-void main()  {
-  SmileID.initialize();
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await SmileID.initialize(useSandbox: false, enableCrashReporting: true);
+  } catch (e) {
+    // Initialization failed (e.g. missing smile_config.json). Handle the error
+    // and do not show Smile ID screens until initialization succeeds.
+  }
+  runApp(const MyApp());
 }
 ```
 
