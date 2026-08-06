@@ -9,26 +9,36 @@ class SmileID {
   static SmileIDApi platformInterface = SmileIDApi();
   static SmileIDService api = SmileIDService(platformInterface);
 
-  static void initializeWithApiKey(
+  /// Initializes the SDK with an API key. The returned [Future] completes
+  /// with an error if native initialization fails; await it (and handle
+  /// errors) before showing any Smile ID screens.
+  static Future<void> initializeWithApiKey(
       {required String apiKey,
       required FlutterConfig config,
       required bool useSandbox,
       required bool enableCrashReporting}) {
-    platformInterface.initializeWithApiKey(
+    return platformInterface.initializeWithApiKey(
         apiKey, config, useSandbox, enableCrashReporting);
   }
 
-  static void initializeWithConfig(
+  /// Initializes the SDK with a [FlutterConfig]. The returned [Future]
+  /// completes with an error if native initialization fails; await it (and
+  /// handle errors) before showing any Smile ID screens.
+  static Future<void> initializeWithConfig(
       {required FlutterConfig config,
       required bool useSandbox,
       required bool enableCrashReporting}) {
-    platformInterface.initializeWithConfig(
+    return platformInterface.initializeWithConfig(
         config, useSandbox, enableCrashReporting);
   }
 
-  static void initialize(
+  /// Initializes the SDK from the `smile_config.json` bundled with the app.
+  /// The returned [Future] completes with an error if native initialization
+  /// fails (e.g. the config file is missing); await it (and handle errors)
+  /// before showing any Smile ID screens.
+  static Future<void> initialize(
       {required bool useSandbox, required bool enableCrashReporting}) {
-    platformInterface.initialize(useSandbox, enableCrashReporting);
+    return platformInterface.initialize(useSandbox, enableCrashReporting);
   }
 
   static void setCallbackUrl({required Uri callbackUrl}) {

@@ -3,17 +3,29 @@ package com.smileidentity.flutter.views
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import com.smileidentity.SmileID
+import com.smileidentity.flutter.utils.isSmileIDInitialized
 import io.flutter.Log
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.StandardMessageCodec
 import io.flutter.plugin.platform.PlatformView
 import io.flutter.plugin.platform.PlatformViewFactory
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 
 /**
  * Base class for hosting Smile ID Composables in Flutter. This class handles flutter<>android
@@ -44,10 +56,45 @@ internal abstract class SmileComposablePlatformView(
         ComposeView(context).apply {
             setContent {
                 CompositionLocalProvider(LocalViewModelStoreOwner provides viewModelStoreOwner) {
-                    Content(args)
+                    ContentWhenInitialized(args)
                 }
             }
         }
+
+    /**
+     * Composes [Content] only once [SmileID.initialize] has completed. Capture screens read SDK
+     * state (file save paths) during frame analysis and crash the host app with
+     * `UninitializedPropertyAccessException` if composed while the SDK is uninitialized — e.g.
+     * when initialization failed silently, is still in flight, or never re-ran after the OS
+     * killed and restored the process. Initialization is polled briefly to tolerate an in-flight
+     * initialize; if it does not complete, the failure is delivered through [onError] instead of
+     * crashing.
+     */
+    @Composable
+    private fun ContentWhenInitialized(args: Map<String, Any?>) {
+        var initialized by remember { mutableStateOf(isSmileIDInitialized()) }
+        LaunchedEffect(Unit) {
+            if (!initialized) {
+                val becameInitialized =
+                    withContext(Dispatchers.IO) {
+                        withTimeoutOrNull(INITIALIZATION_TIMEOUT) {
+                            while (!isSmileIDInitialized()) {
+                                delay(INITIALIZATION_POLL_INTERVAL)
+                            }
+                            true
+                        }
+                    }
+                if (becameInitialized == true) {
+                    initialized = true
+                } else {
+                    onError(IllegalStateException(NOT_INITIALIZED_MESSAGE))
+                }
+            }
+        }
+        if (initialized) {
+            Content(args)
+        }
+    }
 
     /**
      * Implement this method to provide the actual Composable content for the view
@@ -102,7 +149,9 @@ internal abstract class SmileComposablePlatformView(
     fun onError(throwable: Throwable) {
         // Print the stack trace, since we can't provide the actual Throwable back to Flutter
         throwable.printStackTrace()
-        methodChannel.invokeMethod("onError", throwable.message)
+        // The Flutter side expects a non-null String; a Throwable with no message would
+        // otherwise kill error delivery entirely
+        methodChannel.invokeMethod("onError", throwable.message ?: throwable.toString())
     }
 
     override fun getView() = view
@@ -112,6 +161,12 @@ internal abstract class SmileComposablePlatformView(
         view = null
     }
 }
+
+private val INITIALIZATION_TIMEOUT = 5.seconds
+private val INITIALIZATION_POLL_INTERVAL = 200.milliseconds
+private const val NOT_INITIALIZED_MESSAGE =
+    "Smile ID SDK has not been initialized. Call SmileID.initialize and await the returned " +
+        "Future (handling any error) before showing a Smile ID screen."
 
 /**
  * Generic factory for creating SmileID platform views

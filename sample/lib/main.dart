@@ -41,7 +41,13 @@ class _MyAppState extends State<MyApp> {
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-    SmileID.initialize(useSandbox: false, enableCrashReporting: true);
+    try {
+      await SmileID.initialize(useSandbox: false, enableCrashReporting: true);
+    } catch (e) {
+      // Initialization failed (e.g. missing smile_config.json). Do not show
+      // Smile ID screens until initialization succeeds.
+      debugPrint("Smile ID initialization failed: $e");
+    }
   }
 
   @override
@@ -98,20 +104,24 @@ class MainContent extends StatelessWidget {
   Widget enhancedKycAsyncButton() {
     return ElevatedButton(
         child: const Text("Enhanced KYC (Async)"),
-        onPressed: () {
+        onPressed: () async {
           // replace with your own credentials
-          // SmileID.initialize(useSandbox: false, enableCrashReporting: true);
           var config = FlutterConfig(
               partnerId: "partner-id-here",
               authToken: "auth-token-here",
               prodBaseUrl: "https://api.smileidentity.com/v1/",
               sandboxBaseUrl: "https://api.smileidentity.com/v1/");
 
-          SmileID.initializeWithConfig(
-            config: config,
-            enableCrashReporting: true,
-            useSandbox: false,
-          );
+          try {
+            await SmileID.initializeWithConfig(
+              config: config,
+              enableCrashReporting: true,
+              useSandbox: false,
+            );
+          } catch (e) {
+            debugPrint("Smile ID initialization failed: $e");
+            return;
+          }
 
           var userId = "<your user's user ID>";
           SmileID.api

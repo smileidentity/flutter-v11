@@ -1,5 +1,12 @@
 # Release Notes
 
+### 11.2.11 - Unreleased
+
+### Fixed
+* Fixed a fatal Android crash (`UninitializedPropertyAccessException: lateinit property fileSavePath has not been initialized`) during selfie/liveness and document capture when a Smile ID screen was shown before SDK initialization completed, after it failed silently, or after the OS killed and restored the app process. Capture screens now wait briefly for initialization and, if it does not complete, deliver an error to your `onError` callback instead of crashing the app.
+* `SmileID.initialize`, `SmileID.initializeWithConfig`, and `SmileID.initializeWithApiKey` now return a `Future` so initialization failures can be awaited and handled instead of being silently dropped. Existing call sites keep compiling; awaiting the result is strongly recommended.
+* Fixed an Android error-delivery bug where a native error without a message was never delivered to the `onError` callback.
+
 ### 11.2.10 - May 15, 2026
 
 ### Changed
