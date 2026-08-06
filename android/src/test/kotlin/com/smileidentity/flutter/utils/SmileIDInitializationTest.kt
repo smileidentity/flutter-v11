@@ -29,4 +29,18 @@ internal class SmileIDInitializationTest {
             unmockkAll()
         }
     }
+
+    @Test
+    fun `probe treats a non-initialization failure as initialized and never throws`() {
+        mockkObject(SmileID)
+        mockkStatic(SmileID::class)
+        try {
+            every { SmileID.config } returns mockk()
+            every { SmileID.api } returns mockk()
+            every { SmileID.getUnsubmittedJobs() } throws IllegalStateException("disk error")
+            assertTrue(isSmileIDInitialized())
+        } finally {
+            unmockkAll()
+        }
+    }
 }

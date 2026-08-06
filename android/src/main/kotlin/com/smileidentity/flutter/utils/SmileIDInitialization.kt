@@ -25,4 +25,8 @@ internal fun isSmileIDInitialized(): Boolean = try {
     true
 } catch (e: UninitializedPropertyAccessException) {
     false
+} catch (e: Exception) {
+    // Any other failure means the lateinit reads succeeded — the SDK is initialized and the
+    // probe must never take the host app down
+    true
 }
