@@ -79,7 +79,6 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
     }
     
     func didSucceed(selfieImage: URL, livenessImages: [URL], didSubmitBiometricJob: Bool) {
-        _childViewController?.removeFromParent()
         let arguments: [String: Any] = [
             "selfieFile": selfieImage.absoluteString,
             "livenessFiles": livenessImages.map {
@@ -89,8 +88,14 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
         ]
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                _channel.invokeMethod("onSuccess", arguments: jsonString)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            onPlatformThread {
+                self._childViewController?.removeFromParent()
+                if let jsonString = jsonString {
+                    self._channel.invokeMethod("onSuccess", arguments: jsonString)
+                } else {
+                    self._channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
+                }
             }
         } catch {
             didError(error: error)
@@ -99,7 +104,9 @@ class SmileIDBiometricKYC : NSObject, FlutterPlatformView, BiometricKycResultDel
     
     func didError(error: Error) {
         print("[Smile ID] An error occurred - \(error.localizedDescription)")
-        _channel.invokeMethod("onError", arguments: error.localizedDescription)
+        onPlatformThread {
+            self._channel.invokeMethod("onError", arguments: error.localizedDescription)
+        }
     }
     
     class Factory : NSObject, FlutterPlatformViewFactory {

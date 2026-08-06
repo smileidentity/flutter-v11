@@ -25,9 +25,14 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
         let useStrictMode = args["useStrictMode"] as? Bool ?? false
         let smileSensitivity = SmileSensitivity.from(args["smileSensitivity"] as? String)
 
+        // One identity for the whole capture session. Strict mode keys the selfie and liveness
+        // files it stores by userId, so an id that changes after the frames are written sends the
+        // submission looking in a directory that was never populated.
+        let userId = generateUserId()
+
         _viewModel = SelfieViewModel(
             isEnroll: false,
-            userId: generateUserId(),
+            userId: userId,
             jobId: generateJobId(),
             allowNewEnroll: false,
             allowAgentMode: allowAgentMode,
@@ -47,6 +52,7 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
         
         let rootView = SmileIDRootView(
             viewModel: _viewModel,
+            userId: userId,
             showConfirmationDialog: showConfirmationDialog,
             showInstructions: showInstructions,
             allowAgentMode: allowAgentMode,
@@ -66,6 +72,12 @@ class SmileIDSmartSelfieCaptureView: NSObject, FlutterPlatformView {
 
 struct SmileIDRootView: View {
     @ObservedObject var viewModel: SelfieViewModel
+
+    /// Stored, never generated in `body`. SwiftUI re-evaluates a body whenever it needs to — a
+    /// layout pass, a rotation, an observed publish — and the capture screen built there keys the
+    /// files it stores by this id, so generating it per evaluation loses the captured frames.
+    let userId: String
+
     @State private var acknowledgedInstructions = false
     let showConfirmationDialog: Bool
     let showInstructions: Bool
@@ -89,7 +101,7 @@ struct SmileIDRootView: View {
         ZStack {
             if useStrictMode {
                 SmileID.smartSelfieEnrollmentScreenEnhanced(
-                    userId: generateUserId(),
+                    userId: userId,
                     showAttribution: showAttribution,
                     showInstructions: showInstructions,
                     skipApiSubmission: true,
@@ -149,13 +161,21 @@ struct SmileIDRootView: View {
     }
 
     private func sendSuccessMessage(with arguments: [String: Any]) {
+        let channel = channel
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                channel.invokeMethod("onSuccess", arguments: jsonString)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            onPlatformThread {
+                if let jsonString = jsonString {
+                    channel.invokeMethod("onSuccess", arguments: jsonString)
+                } else {
+                    channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
+                }
             }
         } catch {
-            channel.invokeMethod("onError", arguments: error.localizedDescription)
+            onPlatformThread {
+                channel.invokeMethod("onError", arguments: error.localizedDescription)
+            }
         }
     }
 }
@@ -177,8 +197,14 @@ extension SmileIDRootView: SmartSelfieResultDelegate {
         }
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                channel.invokeMethod("onSuccess", arguments: jsonString)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            let channel = channel
+            onPlatformThread {
+                if let jsonString = jsonString {
+                    channel.invokeMethod("onSuccess", arguments: jsonString)
+                } else {
+                    channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
+                }
             }
         } catch {
             didError(error: error)
@@ -186,7 +212,10 @@ extension SmileIDRootView: SmartSelfieResultDelegate {
     }
 
     func didError(error: Error) {
-        channel.invokeMethod("onError", arguments: error.localizedDescription)
+        let channel = channel
+        onPlatformThread {
+            channel.invokeMethod("onError", arguments: error.localizedDescription)
+        }
     }
 }
 

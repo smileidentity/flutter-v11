@@ -109,8 +109,14 @@ struct SmileIDDocumentRootView: View {
             ]
             do {
                 let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-                if let jsonString = String(data: jsonData, encoding: .utf8) {
-                    channel.invokeMethod("onSuccess", arguments: jsonString)
+                let jsonString = String(data: jsonData, encoding: .utf8)
+                let channel = channel
+                onPlatformThread {
+                    if let jsonString = jsonString {
+                        channel.invokeMethod("onSuccess", arguments: jsonString)
+                    } else {
+                        channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
+                    }
                 }
             } catch {
                 didError(error: error)
@@ -124,7 +130,10 @@ struct SmileIDDocumentRootView: View {
     func onSkip() {}
 
     func didError(error: Error) {
-        channel.invokeMethod("onError", arguments: error.localizedDescription)
+        let channel = channel
+        onPlatformThread {
+            channel.invokeMethod("onError", arguments: error.localizedDescription)
+        }
     }
 
     private func encodeToJSONString<T: Encodable>(_ value: T) -> String? {
@@ -135,13 +144,21 @@ struct SmileIDDocumentRootView: View {
     }
 
     private func sendSuccessMessage(with arguments: [String: Any]) {
+        let channel = channel
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: arguments, options: [])
-            if let jsonString = String(data: jsonData, encoding: .utf8) {
-                channel.invokeMethod("onSuccess", arguments: jsonString)
+            let jsonString = String(data: jsonData, encoding: .utf8)
+            onPlatformThread {
+                if let jsonString = jsonString {
+                    channel.invokeMethod("onSuccess", arguments: jsonString)
+                } else {
+                    channel.invokeMethod("onError", arguments: resultEncodingErrorMessage)
+                }
             }
         } catch {
-            channel.invokeMethod("onError", arguments: error.localizedDescription)
+            onPlatformThread {
+                channel.invokeMethod("onError", arguments: error.localizedDescription)
+            }
         }
     }
 }
