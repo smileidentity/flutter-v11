@@ -57,7 +57,9 @@ opposites.
   threads — `--paginate`, or busy PRs silently lose comments past the first page — and
   `gh pr view <n> --json reviews,comments` for the rest) and work them to a close: fix
   what is real, reply on the thread saying what changed and how you verified it, then
-  resolve the thread. Say so plainly when a comment is wrong or does not apply, and
+  resolve the thread — resolution is GraphQL-only: look the thread ids up via the
+  `pullRequest.reviewThreads` query, then call the `resolveReviewThread` mutation
+  (`gh api graphql -f query='mutation { resolveReviewThread(input: {threadId: "<id>"}) { thread { isResolved } } }'`). Say so plainly when a comment is wrong or does not apply, and
   resolve it with that reasoning — silence reads as an unaddressed finding. Do the same
   for automated reviewers and scan bots; if a finding is a false positive, prove it (run
   the tool yourself) rather than asserting it. Check again after each push, since new
