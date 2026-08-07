@@ -10,19 +10,19 @@
 * iOS results are now always handed to Dart on the platform thread. Capture results and API replies were forwarded from whichever thread the native SDK or the network call finished on, which Flutter does not allow for platform channel messages — depending on the host app's build settings that could crash the app after a capture completed, even though the job itself submitted successfully.
 
 ### Changed
-* Bump Android SDK to [v11.2.0](https://github.com/smileidentity/android/releases/tag/v11.2.0)
+* Bump Android SDK to [v11.2.0](https://github.com/smileidentity/android-v11/releases/tag/v11.2.0)
 * Bump iOS SDK to [v11.2.0](https://github.com/smileidentity/ios/releases/tag/v11.2.0)
 
 ### 11.2.10 - May 15, 2026
 
 ### Changed
-* Bump Android SDK to [v11.1.11](https://github.com/smileidentity/android/releases/tag/v11.1.11)
+* Bump Android SDK to [v11.1.11](https://github.com/smileidentity/android-v11/releases/tag/v11.1.11)
 * Bump iOS SDK to [v11.1.11](https://github.com/smileidentity/ios/releases/tag/v11.1.11)
 
 ### 11.2.9 - March 13, 2026
 
 ### Changed
-* Bump Android SDK to [v11.1.9](https://github.com/smileidentity/android/releases/tag/v11.1.9)
+* Bump Android SDK to [v11.1.9](https://github.com/smileidentity/android-v11/releases/tag/v11.1.9)
 * Bump iOS SDK to [v11.1.9](https://github.com/smileidentity/ios/releases/tag/v11.1.9)
 * Changed FlutterSmartSelfieResponse.partnerParams from a Map<String?, String?>? to a FlutterPartnerParams
 
@@ -37,7 +37,7 @@
 ## 11.2.7 - January 23, 2026
 
 ### Changed
-* Bump Android SDK to [v11.1.7](https://github.com/smileidentity/android/releases/tag/v11.1.7)
+* Bump Android SDK to [v11.1.7](https://github.com/smileidentity/android-v11/releases/tag/v11.1.7)
 * Bump iOS SDK to [v11.1.7](https://github.com/smileidentity/ios/releases/tag/v11.1.7)
 
 ### Fixed
@@ -46,7 +46,7 @@
 ## 11.2.5 - December 23, 2025
 
 ### Changed
-* Bump Android SDK to [v11.1.6](https://github.com/smileidentity/android/releases/tag/v11.1.6)
+* Bump Android SDK to [v11.1.6](https://github.com/smileidentity/android-v11/releases/tag/v11.1.6)
 * Bump iOS SDK to [v11.1.5](https://github.com/smileidentity/ios/releases/tag/v11.1.5)
 
 ### Added
@@ -55,7 +55,7 @@
 ## 11.2.4 - December 22, 2025
 
 ### Changed
-* Bump Android SDK to [v11.1.5](https://github.com/smileidentity/android/releases/tag/v11.1.5)
+* Bump Android SDK to [v11.1.5](https://github.com/smileidentity/android-v11/releases/tag/v11.1.5)
 * Bump iOS SDK to [v11.1.4](https://github.com/smileidentity/ios/releases/tag/v11.1.4)
 
 ### Added
@@ -64,18 +64,18 @@
 ## 11.2.3 - November 3, 2025
 
 ### Changed
-* Bump Android SDK to [v11.1.4](https://github.com/smileidentity/android/releases/tag/v11.1.4)
+* Bump Android SDK to [v11.1.4](https://github.com/smileidentity/android-v11/releases/tag/v11.1.4)
 * Bump iOS SDK to [v11.1.3](https://github.com/smileidentity/ios/releases/tag/v11.1.3)
 
 ## 11.2.2 - September 18, 2025
 
 ### Changed
-* Bump Android SDK to v11.1.2 (https://github.com/smileidentity/android/releases/tag/v11.1.2)
+* Bump Android SDK to v11.1.2 (https://github.com/smileidentity/android-v11/releases/tag/v11.1.2)
 
 ## 11.2.1 - September 10, 2025
 
 ### Changed
-* Bump Android SDK to v11.1.1 (https://github.com/smileidentity/android/releases/tag/v11.1.1)
+* Bump Android SDK to v11.1.1 (https://github.com/smileidentity/android-v11/releases/tag/v11.1.1)
 
 ## 11.2.0 - August 25, 2025
 
@@ -145,7 +145,7 @@ directly by the updated SDK.
  system UI boundaries including status bars, navigation bars, and notches. This change only affects 
  the Android platform implementation while maintaining existing gesture recognition and view creation 
  behavior, ensuring the platform view content is not obscured by system UI elements.
-* Bump android to 11.0.4 (https://github.com/smileidentity/android/releases/tag/v11.0.4)
+* Bump android to 11.0.4 (https://github.com/smileidentity/android-v11/releases/tag/v11.0.4)
 
 ## 11.0.1
 
@@ -157,7 +157,7 @@ directly by the updated SDK.
 ### Changed
 * Metadata collection is now handled internally by native SDKs
 * Bump iOS to 11.0.0 (https://github.com/smileidentity/ios/releases/tag/v11.0.0)
-* Bump android to 11.0.2 (https://github.com/smileidentity/android/releases/tag/v11.0.2)
+* Bump android to 11.0.2 (https://github.com/smileidentity/android-v11/releases/tag/v11.0.2)
 
 ## 10.4.3
 
