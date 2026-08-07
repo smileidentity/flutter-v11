@@ -12,15 +12,15 @@ Pod::Spec.new do |s|
   s.source = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'SmileID', '11.1.11'
+  s.dependency 'SmileID', '11.2.0'
   # for development alongside sample/ios/Podfile uncomment the version and specify
   # tag or branch in sample/ios/Podfile
   # s.dependency "SmileID"
   s.platform = :ios, '13.0'
 
   # Flutter.framework does not contain a i386 slice.
-  s.pod_target_xcconfig = { 
-    'DEFINES_MODULE' => 'YES', 
+  s.pod_target_xcconfig = {
+    'DEFINES_MODULE' => 'YES',
     'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386',
     'GCC_PREPROCESSOR_DEFINITIONS' => "SMILE_ID_VERSION=\\\"#{package["version"]}\\\""
   }
