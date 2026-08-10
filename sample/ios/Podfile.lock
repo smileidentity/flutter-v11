@@ -5,6 +5,8 @@ PODS:
     - FingerprintJS/SystemControl
   - FingerprintJS/SystemControl (1.6.0)
   - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
   - Sentry (8.58.4):
     - Sentry/Core (= 8.58.4)
   - Sentry/Core (8.58.4)
@@ -21,6 +23,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - smile_id (from `.symlinks/plugins/smile_id/ios`)
 
 SPEC REPOS:
@@ -34,14 +37,17 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
   smile_id:
     :path: ".symlinks/plugins/smile_id/ios"
 
 SPEC CHECKSUMS:
   FingerprintJS: 3a0c3e7f5035ecae199e5e5836200d9b20f1266a
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   Sentry: 5321d74bdd28d6f6f8beaa1ca06f1fdc746bff49
-  smile_id: eefa95b08223534aed6cac62085aaf9ada543094
+  smile_id: daf1c2d6d9e81e6898cf7c04f94c70a0abf4b54c
   SmileID: 848c46109ef664eae1491c78642b273e4a0997c5
   SmileIDSDK: d4888e5df8039f2eec1f10a31c81bd681262d911
   ZIPFoundation: dfd3d681c4053ff7e2f7350bc4e53b5dba3f5351
