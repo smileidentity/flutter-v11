@@ -44,3 +44,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Committed on purpose: the sample is an app, its resolved SwiftPM graph is pinned (pub's
+# gitignore parser matches swiftpm/ against the .swiftpm/ pattern above; git itself does not)
+!ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
