@@ -34,6 +34,24 @@ Full documentation is available at https://docs.usesmileid.com/integration-optio
 * See: https://github.com/smileidentity/android for Android specific requirements
 * See: https://github.com/smileidentity/ios for iOS specific requirements
 
+#### iOS dependency management
+
+The SDK supports both Swift Package Manager and CocoaPods.
+
+* **Flutter 3.44+** — Swift Package Manager is used automatically. No `Podfile` needed for this
+  SDK.
+* **Flutter 3.24 – 3.43** — CocoaPods is used by default. Enabling Swift Package Manager on these
+  versions is not supported by this SDK: it depends on the `FlutterFramework` package that
+  Flutter introduced in 3.44. Keep the flag at its default and the SDK integrates through
+  CocoaPods.
+* **Older Flutter** — CocoaPods, as before.
+
+Minimum iOS deployment target: **13.0** (unchanged).
+
+Swift Package Manager fetches the native SDK from GitHub Releases at resolve time. If your
+network sits behind a proxy or allowlist, allow `github.com` and
+`objects.githubusercontent.com`, or use CocoaPods, which remains fully supported.
+
 #### 1. Dependency
 
 The latest release is available on [pub.dev](https://pub.dev/packages/smile_id)

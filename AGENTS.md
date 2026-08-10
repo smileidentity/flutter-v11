@@ -105,24 +105,28 @@ and `semgrep.yml`. Publishing is CI's job.
   and `generated/` (Pigeon output).
 - `pigeon/messages.dart` — the **channel contract**. Regenerate with `bash pigeon.sh`.
 - `android/` — Kotlin glue, namespace `com.smileidentity.flutter`
-- `ios/smile_id.podspec` — iOS glue
+- `ios/smile_id.podspec` (CocoaPods) + `ios/smile_id/` (Swift package) — iOS glue; the Swift
+  sources live in `ios/smile_id/Sources/smile_id/`
 
-**Native versions are pinned in two places and must move together:**
+**Native versions are pinned in three places and must move together:**
 
-| platform | file | pin |
+| platform / manager | file | pin |
 |---|---|---|
 | Android | `android/build.gradle.kts` | `com.smileidentity:android-sdk:<version>` |
-| iOS | `ios/smile_id.podspec` | `s.dependency 'SmileID', '<version>'` |
+| iOS — CocoaPods | `ios/smile_id.podspec` | `s.dependency 'SmileID', '<version>'` |
+| iOS — Swift Package Manager | `ios/smile_id/Package.swift` | `.package(url: "…/smileidentity/ios.git", exact: "<version>")` |
 
-Bumping one without the other ships a wrapper whose two platforms behave differently. Always
-bump both in the same change, and state the native version in the PR.
+Bumping one without the others ships a wrapper whose platforms — or whose two iOS dependency
+managers — behave differently. Always bump all three in the same change, run
+`bash scripts/verify_native_pins.sh` (CI runs it too), and state the native version in the PR.
 
 ## Pigeon Workflow
 
 `pigeon/messages.dart` is the wire contract between Dart and both natives.
 
 - 🚫 **Never hand-edit generated files** (`lib/generated/`, the generated Kotlin/Swift). Change
-  `pigeon/messages.dart` and re-run `bash pigeon.sh`.
+  `pigeon/messages.dart` and re-run `bash pigeon.sh`. The Swift output lands in
+  `ios/smile_id/Sources/smile_id/SmileIDMessages.g.swift`.
 - Field order is **append-only** — inserting a field in the middle breaks the wire format.
 - New config fields must be optional or defaulted on **both** native sides, or one platform
   crashes on a message it can't decode.
@@ -190,8 +194,11 @@ Before finishing any change:
       **both** the package and `sample`
 - [ ] Pigeon contract changed → regenerated via `pigeon.sh`, both natives updated, field order
       still append-only
-- [ ] Native pin bumped → **both** `android/build.gradle.kts` and `ios/smile_id.podspec`, version
-      stated in the PR
+- [ ] Native pin bumped → **all three** of `android/build.gradle.kts`, `ios/smile_id.podspec` and
+      `ios/smile_id/Package.swift`; `bash scripts/verify_native_pins.sh` passes; version stated
+      in the PR
+- [ ] iOS change → sample app builds under **both** CocoaPods and Swift Package Manager, and the
+      two iOS native pins match
 - [ ] Public surface changed → parity impact stated; sibling wrappers mirrored
 - [ ] `CHANGELOG.md` bullet for anything partner-visible
 - [ ] Self-review in priority order — security (no PII/secrets in logs) → channel contract
