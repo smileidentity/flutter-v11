@@ -97,9 +97,12 @@ jobs:
       - name: Disable Swift Package Manager
         if: ${{ !matrix.swiftpm }}
         run: flutter config --no-enable-swift-package-manager
+      # --allow-warnings tolerates the podspec's pre-existing lint warnings (no license
+      # attribute, :path source) — errors, like a source_files glob matching nothing,
+      # still fail the lint.
       - name: Lint podspec
         if: ${{ !matrix.swiftpm }}
-        run: pod lib lint ios/smile_id.podspec --configuration=Debug --skip-tests --use-modular-headers
+        run: pod lib lint ios/smile_id.podspec --configuration=Debug --skip-tests --use-modular-headers --allow-warnings
       - name: Build iOS Sample App (CocoaPods)
         if: ${{ !matrix.swiftpm }}
         run: cd sample/ios && pod install && cd .. && flutter build ios --no-codesign
