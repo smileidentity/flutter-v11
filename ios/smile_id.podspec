@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.homepage = package["homepage"]
   s.author = { 'Smile ID' => 'support@usesmileid.com' }
   s.source = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'smile_id/Sources/smile_id/**/*.swift'
   s.dependency 'Flutter'
   s.dependency 'SmileID', '11.2.0'
   # for development alongside sample/ios/Podfile uncomment the version and specify
