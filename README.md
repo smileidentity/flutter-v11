@@ -52,6 +52,19 @@ Swift Package Manager fetches the native SDK from GitHub Releases at resolve tim
 network sits behind a proxy or allowlist, allow `github.com` and
 `objects.githubusercontent.com`, or use CocoaPods, which remains fully supported.
 
+**Using `sentry_flutter`?** Its iOS dependency and ours both pin exact `sentry-cocoa` versions,
+so Swift Package Manager cannot resolve the two together and the build fails with:
+
+```
+xcodebuild: error: Could not resolve package dependencies:
+  Dependencies could not be resolved because 'sentry_flutter-x.y.z' depends on 'sentry-cocoa' A
+  'sentry-cocoa' B is required because 'ios' depends on 'sentry-cocoa' B ...
+```
+
+Until a native SDK release removes the pin, either stay on CocoaPods
+(`flutter config --no-enable-swift-package-manager`), where the graph resolves cleanly, or use
+a `sentry_flutter` version whose `sentry-cocoa` pin matches the one named in the error.
+
 #### 1. Dependency
 
 The latest release is available on [pub.dev](https://pub.dev/packages/smile_id)
