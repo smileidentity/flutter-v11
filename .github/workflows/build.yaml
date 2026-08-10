@@ -86,8 +86,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get && cd sample && flutter pub get && cd ..
 
-      # Pinned unconditionally: the SwiftPM leg still runs pod install (the sample keeps
-      # its Podfile), so both legs must use the same CocoaPods version.
+      # Both legs run pod install (the sample keeps its Podfile), so pin CocoaPods for both.
       - name: Setup CocoaPods
         uses: maxim-lobanov/setup-cocoapods@8e97e1e98e6ccf42564fdf5622c8feec74199377 # v1
         with:
@@ -97,9 +96,7 @@ jobs:
       - name: Disable Swift Package Manager
         if: ${{ matrix.name == 'cocoapods' }}
         run: flutter config --no-enable-swift-package-manager
-      # --allow-warnings tolerates the podspec's pre-existing lint warnings (no license
-      # attribute, :path source) — errors, like a source_files glob matching nothing,
-      # still fail the lint.
+      # --allow-warnings: the podspec has pre-existing lint warnings; errors still fail.
       - name: Lint podspec
         if: ${{ matrix.name == 'cocoapods' }}
         run: pod lib lint ios/smile_id.podspec --configuration=Debug --skip-tests --use-modular-headers --allow-warnings
@@ -124,13 +121,11 @@ jobs:
       - name: Assert the plugin resolved through Swift Package Manager
         if: ${{ matrix.name == 'swiftpm' }}
         run: |
-          # The ephemeral layout below is a Flutter tool implementation detail,
-          # verified on Flutter 3.44.0 — a failure can also mean the layout moved.
+          # Ephemeral layout is a Flutter tool internal (verified on 3.44.0).
           pkgs=sample/ios/Flutter/ephemeral/Packages/.packages
           generated=sample/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift
           test -e "$pkgs/FlutterFramework" || { echo "FlutterFramework missing from $pkgs: SwiftPM was not used, or the Flutter tool layout changed"; exit 1; }
-          # The plugin symlink is named after the package root directory (the
-          # repo checkout for a path dependency), so find it by its target.
+          # The plugin symlink is named after the checkout directory, so find it by target.
           plugin_link=""
           for link in "$pkgs"/*; do
             case "$(readlink "$link")" in */ios/smile_id) plugin_link="$link" ;; esac

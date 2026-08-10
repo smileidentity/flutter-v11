@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 # Fails if the iOS native SmileID pin drifts between CocoaPods and Swift Package Manager.
-# Commented-out pins are ignored, and exactly one live pin is expected in each manifest —
-# so the CONTRIBUTING.md dev flow (pin commented out for a branch override) fails loudly
-# here instead of reading as "consistent".
+# Only uncommented pins count, exactly one per manifest — a commented-out dev pin fails loudly.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
