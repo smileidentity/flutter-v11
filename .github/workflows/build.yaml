@@ -58,23 +58,77 @@ jobs:
         run: cd sample && flutter build apk && cd ..
   iOS:
     runs-on: macos-15
-    timeout-minutes: 10
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # CocoaPods path — the floor we still support.
+          - name: cocoapods
+            flutter-version: "3.32.0"
+            swiftpm: false
+          # Swift Package Manager path — the default for partners on 3.44+.
+          - name: swiftpm
+            flutter-version: "3.44.0"
+            swiftpm: true
+    name: iOS (${{ matrix.name }})
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - run: touch sample/ios/smile_config.json
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
-          flutter-version: "3.32.0" # Set the desired Flutter version here
+          flutter-version: ${{ matrix.flutter-version }}
           channel: "stable"
       - name: Select Xcode 16.4
         uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         with:
           xcode-version: "16.4"
-      - name: Setup Cocoapods
+      - name: Verify iOS native pins match across CocoaPods and SwiftPM
+        run: bash scripts/verify_native_pins.sh
+      - name: Install Dependencies
+        run: flutter pub get && cd sample && flutter pub get && cd ..
+
+      # --- CocoaPods mode ---
+      - name: Setup CocoaPods
+        if: ${{ !matrix.swiftpm }}
         uses: maxim-lobanov/setup-cocoapods@8e97e1e98e6ccf42564fdf5622c8feec74199377 # v1
         with:
           version: 1.14.3
-      - name: Install Dependencies
-        run: flutter pub get && cd sample && flutter pub get && cd ..
-      - name: Build iOS Sample App
-        run: cd sample/ios && pod install && flutter build ios --no-codesign && cd ..
+      - name: Disable Swift Package Manager
+        if: ${{ !matrix.swiftpm }}
+        run: flutter config --no-enable-swift-package-manager
+      - name: Lint podspec
+        if: ${{ !matrix.swiftpm }}
+        run: pod lib lint ios/smile_id.podspec --configuration=Debug --skip-tests --use-modular-headers
+      - name: Build iOS Sample App (CocoaPods)
+        if: ${{ !matrix.swiftpm }}
+        run: cd sample/ios && pod install && cd .. && flutter build ios --no-codesign
+
+      # --- Swift Package Manager mode ---
+      - name: Enable Swift Package Manager
+        if: ${{ matrix.swiftpm }}
+        run: flutter config --enable-swift-package-manager
+      - name: Cache Swift Package Manager downloads
+        if: ${{ matrix.swiftpm }}
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/Library/Caches/org.swift.swiftpm
+          key: swiftpm-${{ runner.os }}-${{ hashFiles('ios/smile_id/Package.swift') }}
+          restore-keys: swiftpm-${{ runner.os }}-
+      - name: Build iOS Sample App (Swift Package Manager)
+        if: ${{ matrix.swiftpm }}
+        run: cd sample && flutter build ios --no-codesign
+      - name: Assert the plugin resolved through Swift Package Manager
+        if: ${{ matrix.swiftpm }}
+        run: |
+          pkgs=sample/ios/Flutter/ephemeral/Packages/.packages
+          test -e "$pkgs/FlutterFramework" || { echo "FlutterFramework missing from $pkgs"; exit 1; }
+          # The plugin symlink is named after the package root directory (the
+          # repo checkout for a path dependency), so find it by its target.
+          plugin_link=""
+          for link in "$pkgs"/*; do
+            case "$(readlink "$link")" in */ios/smile_id) plugin_link="$link" ;; esac
+          done
+          test -n "$plugin_link" || { echo "no symlink in $pkgs points at ios/smile_id — the plugin fell back to CocoaPods"; exit 1; }
+          test -f "$plugin_link/Package.swift" || { echo "$plugin_link does not contain Package.swift"; exit 1; }
+          grep -q 'smile_id' sample/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift
