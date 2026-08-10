@@ -6,7 +6,7 @@ import 'package:pigeon/pigeon.dart';
   kotlinOut:
       'android/src/main/kotlin/com/smileidentity/flutter/generated/SmileIDMessages.g.kt',
   kotlinOptions: KotlinOptions(errorClassName: "SmileFlutterError"),
-  swiftOut: 'ios/Classes/SmileIDMessages.g.swift',
+  swiftOut: 'ios/smile_id/Sources/smile_id/SmileIDMessages.g.swift',
   swiftOptions: SwiftOptions(),
   dartPackageName: 'smileid',
 ))
