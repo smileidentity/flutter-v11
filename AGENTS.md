@@ -117,8 +117,9 @@ and `semgrep.yml`. Publishing is CI's job.
 | iOS — Swift Package Manager | `ios/smile_id/Package.swift` | `.package(url: "…/smileidentity/ios.git", exact: "<version>")` |
 
 Bumping one without the others ships a wrapper whose platforms — or whose two iOS dependency
-managers — behave differently. Always bump all three in the same change, run
-`bash scripts/verify_native_pins.sh` (CI runs it too), and state the native version in the PR.
+managers — behave differently. Always bump all three in the same change and state the native
+version in the PR. `bash scripts/verify_native_pins.sh` (CI runs it too) proves the **two iOS
+pins** agree — it does not check Android, so the Android row is on you.
 
 ## Pigeon Workflow
 
@@ -195,8 +196,8 @@ Before finishing any change:
 - [ ] Pigeon contract changed → regenerated via `pigeon.sh`, both natives updated, field order
       still append-only
 - [ ] Native pin bumped → **all three** of `android/build.gradle.kts`, `ios/smile_id.podspec` and
-      `ios/smile_id/Package.swift`; `bash scripts/verify_native_pins.sh` passes; version stated
-      in the PR
+      `ios/smile_id/Package.swift`; `bash scripts/verify_native_pins.sh` passes (it checks the
+      two iOS pins only); version stated in the PR
 - [ ] iOS change → sample app builds under **both** CocoaPods and Swift Package Manager, and the
       two iOS native pins match
 - [ ] Public surface changed → parity impact stated; sibling wrappers mirrored

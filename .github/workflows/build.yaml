@@ -66,11 +66,9 @@ jobs:
           # CocoaPods path — the floor we still support.
           - name: cocoapods
             flutter-version: "3.32.0"
-            swiftpm: false
           # Swift Package Manager path — the default for partners on 3.44+.
           - name: swiftpm
             flutter-version: "3.44.0"
-            swiftpm: true
     name: iOS (${{ matrix.name }})
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -88,50 +86,60 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get && cd sample && flutter pub get && cd ..
 
-      # --- CocoaPods mode ---
+      # Pinned unconditionally: the SwiftPM leg still runs pod install (the sample keeps
+      # its Podfile), so both legs must use the same CocoaPods version.
       - name: Setup CocoaPods
-        if: ${{ !matrix.swiftpm }}
         uses: maxim-lobanov/setup-cocoapods@8e97e1e98e6ccf42564fdf5622c8feec74199377 # v1
         with:
           version: 1.14.3
+
+      # --- CocoaPods mode ---
       - name: Disable Swift Package Manager
-        if: ${{ !matrix.swiftpm }}
+        if: ${{ matrix.name == 'cocoapods' }}
         run: flutter config --no-enable-swift-package-manager
       # --allow-warnings tolerates the podspec's pre-existing lint warnings (no license
       # attribute, :path source) — errors, like a source_files glob matching nothing,
       # still fail the lint.
       - name: Lint podspec
-        if: ${{ !matrix.swiftpm }}
+        if: ${{ matrix.name == 'cocoapods' }}
         run: pod lib lint ios/smile_id.podspec --configuration=Debug --skip-tests --use-modular-headers --allow-warnings
       - name: Build iOS Sample App (CocoaPods)
-        if: ${{ !matrix.swiftpm }}
+        if: ${{ matrix.name == 'cocoapods' }}
         run: cd sample/ios && pod install && cd .. && flutter build ios --no-codesign
 
       # --- Swift Package Manager mode ---
       - name: Enable Swift Package Manager
-        if: ${{ matrix.swiftpm }}
+        if: ${{ matrix.name == 'swiftpm' }}
         run: flutter config --enable-swift-package-manager
       - name: Cache Swift Package Manager downloads
-        if: ${{ matrix.swiftpm }}
+        if: ${{ matrix.name == 'swiftpm' }}
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: ~/Library/Caches/org.swift.swiftpm
-          key: swiftpm-${{ runner.os }}-${{ hashFiles('ios/smile_id/Package.swift') }}
+          key: swiftpm-${{ runner.os }}-${{ hashFiles('ios/smile_id/Package.swift', 'sample/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
           restore-keys: swiftpm-${{ runner.os }}-
       - name: Build iOS Sample App (Swift Package Manager)
-        if: ${{ matrix.swiftpm }}
+        if: ${{ matrix.name == 'swiftpm' }}
         run: cd sample && flutter build ios --no-codesign
       - name: Assert the plugin resolved through Swift Package Manager
-        if: ${{ matrix.swiftpm }}
+        if: ${{ matrix.name == 'swiftpm' }}
         run: |
+          # The ephemeral layout below is a Flutter tool implementation detail,
+          # verified on Flutter 3.44.0 — a failure can also mean the layout moved.
           pkgs=sample/ios/Flutter/ephemeral/Packages/.packages
-          test -e "$pkgs/FlutterFramework" || { echo "FlutterFramework missing from $pkgs"; exit 1; }
+          generated=sample/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift
+          test -e "$pkgs/FlutterFramework" || { echo "FlutterFramework missing from $pkgs: SwiftPM was not used, or the Flutter tool layout changed"; exit 1; }
           # The plugin symlink is named after the package root directory (the
           # repo checkout for a path dependency), so find it by its target.
           plugin_link=""
           for link in "$pkgs"/*; do
             case "$(readlink "$link")" in */ios/smile_id) plugin_link="$link" ;; esac
           done
-          test -n "$plugin_link" || { echo "no symlink in $pkgs points at ios/smile_id — the plugin fell back to CocoaPods"; exit 1; }
+          test -n "$plugin_link" || { echo "no symlink in $pkgs points at ios/smile_id: the plugin fell back to CocoaPods, or the Flutter tool layout changed"; exit 1; }
           test -f "$plugin_link/Package.swift" || { echo "$plugin_link does not contain Package.swift"; exit 1; }
-          grep -q 'smile_id' sample/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift
+          grep -q 'package: "smile_id"' "$generated" || { echo "smile_id is not a target dependency in $generated"; exit 1; }
+          # Durable counter-signal: under SwiftPM the plugin must leave the pod graph.
+          ! grep -q 'smile_id' sample/ios/Podfile.lock || { echo "smile_id is still in sample/ios/Podfile.lock — the plugin did not leave the CocoaPods graph"; exit 1; }
+      - name: Assert the committed SwiftPM resolution is still current
+        if: ${{ matrix.name == 'swiftpm' }}
+        run: git diff --exit-code -- sample/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved

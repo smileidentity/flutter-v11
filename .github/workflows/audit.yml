@@ -7,6 +7,10 @@ on:
       - 'pubspec.lock'
       - 'android/*.gradle*'
       - 'android/**/*.gradle*'
+      - 'ios/smile_id.podspec'
+      - 'ios/smile_id/Package.swift'
+      - 'sample/ios/Podfile.lock'
+      - 'sample/ios/**/Package.resolved'
   workflow_dispatch:
   schedule:
     - cron: '0 9 * * *'
