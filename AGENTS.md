@@ -105,24 +105,29 @@ and `semgrep.yml`. Publishing is CI's job.
   and `generated/` (Pigeon output).
 - `pigeon/messages.dart` — the **channel contract**. Regenerate with `bash pigeon.sh`.
 - `android/` — Kotlin glue, namespace `com.smileidentity.flutter`
-- `ios/smile_id.podspec` — iOS glue
+- `ios/smile_id.podspec` (CocoaPods) + `ios/smile_id/` (Swift package) — iOS glue; the Swift
+  sources live in `ios/smile_id/Sources/smile_id/`
 
-**Native versions are pinned in two places and must move together:**
+**Native versions are pinned in three places and must move together:**
 
-| platform | file | pin |
+| platform / manager | file | pin |
 |---|---|---|
 | Android | `android/build.gradle.kts` | `com.smileidentity:android-sdk:<version>` |
-| iOS | `ios/smile_id.podspec` | `s.dependency 'SmileID', '<version>'` |
+| iOS — CocoaPods | `ios/smile_id.podspec` | `s.dependency 'SmileID', '<version>'` |
+| iOS — Swift Package Manager | `ios/smile_id/Package.swift` | `.package(url: "…/smileidentity/ios.git", exact: "<version>")` |
 
-Bumping one without the other ships a wrapper whose two platforms behave differently. Always
-bump both in the same change, and state the native version in the PR.
+Bumping one without the others ships a wrapper whose platforms — or whose two iOS dependency
+managers — behave differently. Always bump all three in the same change and state the native
+version in the PR. `bash scripts/verify_native_pins.sh` (CI runs it too) proves the **two iOS
+pins** agree — it does not check Android, so the Android row is on you.
 
 ## Pigeon Workflow
 
 `pigeon/messages.dart` is the wire contract between Dart and both natives.
 
 - 🚫 **Never hand-edit generated files** (`lib/generated/`, the generated Kotlin/Swift). Change
-  `pigeon/messages.dart` and re-run `bash pigeon.sh`.
+  `pigeon/messages.dart` and re-run `bash pigeon.sh`. The Swift output lands in
+  `ios/smile_id/Sources/smile_id/SmileIDMessages.g.swift`.
 - Field order is **append-only** — inserting a field in the middle breaks the wire format.
 - New config fields must be optional or defaulted on **both** native sides, or one platform
   crashes on a message it can't decode.
@@ -177,6 +182,19 @@ to the v12 SDKs, no file paths into other repos.
 fields/defaults, install coordinates, minimum requirements, error codes, permissions, README
 quick-start — needs a matching docs update or a "Docs impact" note in the PR description.
 
+## Next Release Checklist
+
+One-time items queued for upcoming releases — delete each line when it ships:
+
+- [ ] After the native SDK release that removes the phantom dependency declarations
+      (smileidentity/ios#514 + smileidentity/ios-sdk#119, released together): bump all three
+      native pins here and delete the README's `sentry_flutter` workaround section — the
+      conflict it documents no longer exists.
+- [ ] Right after publishing `smile_id` to pub.dev: re-run the scratch-app build checks against
+      the published package (fresh `flutter create`, `flutter pub add smile_id`, SwiftPM build
+      with no `ios/Pods/`, release archive embeds `SmileIDSDK.framework` and `Lottie.framework`)
+      — the last cheap moment to catch a packaging mistake.
+
 ## Definition of Done
 
 - ⚠️ **Ask first:** new Pigeon fields (wire-compat risk); new Flutter dependencies; native SDK
@@ -190,8 +208,11 @@ Before finishing any change:
       **both** the package and `sample`
 - [ ] Pigeon contract changed → regenerated via `pigeon.sh`, both natives updated, field order
       still append-only
-- [ ] Native pin bumped → **both** `android/build.gradle.kts` and `ios/smile_id.podspec`, version
-      stated in the PR
+- [ ] Native pin bumped → **all three** of `android/build.gradle.kts`, `ios/smile_id.podspec` and
+      `ios/smile_id/Package.swift`; `bash scripts/verify_native_pins.sh` passes (it checks the
+      two iOS pins only); version stated in the PR
+- [ ] iOS change → sample app builds under **both** CocoaPods and Swift Package Manager, and the
+      two iOS native pins match
 - [ ] Public surface changed → parity impact stated; sibling wrappers mirrored
 - [ ] `CHANGELOG.md` bullet for anything partner-visible
 - [ ] Self-review in priority order — security (no PII/secrets in logs) → channel contract

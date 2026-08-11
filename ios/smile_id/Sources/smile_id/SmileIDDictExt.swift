@@ -1,3 +1,5 @@
+import Foundation
+
 extension Dictionary where Key == String, Value == Any {
     func toJSONCompatibleDictionary() -> [String: Any] {
         var jsonCompatibleDict = [String: Any]()

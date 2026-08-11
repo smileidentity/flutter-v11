@@ -1,5 +1,12 @@
 # Release Notes
 
+### Unreleased
+
+### Added
+* Added Swift Package Manager support for iOS. Apps on Flutter 3.44 or newer now integrate the
+  SDK through Swift Package Manager by default, with no changes required on your side.
+  CocoaPods remains fully supported — if your app still uses CocoaPods, nothing changes.
+
 ### 11.2.11 - August 7, 2026
 
 ### Fixed

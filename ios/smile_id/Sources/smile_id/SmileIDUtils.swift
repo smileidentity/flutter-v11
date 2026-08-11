@@ -1,5 +1,6 @@
 import Foundation
 import SmileID
+import UIKit
 
 /// Runs `work` on the platform (main) thread, synchronously when already there.
 ///

@@ -44,3 +44,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# pub (not git) matches swiftpm/ against .swiftpm/ above — keep the committed resolution
+!ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
