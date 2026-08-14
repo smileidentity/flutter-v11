@@ -186,10 +186,6 @@ quick-start — needs a matching docs update or a "Docs impact" note in the PR d
 
 One-time items queued for upcoming releases — delete each line when it ships:
 
-- [ ] After the native SDK release that removes the phantom dependency declarations
-      (smileidentity/ios#514 + smileidentity/ios-sdk#119, released together): bump all three
-      native pins here and delete the README's `sentry_flutter` workaround section — the
-      conflict it documents no longer exists.
 - [ ] Right after publishing `smile_id` to pub.dev: re-run the scratch-app build checks against
       the published package (fresh `flutter create`, `flutter pub add smile_id`, SwiftPM build
       with no `ios/Pods/`, release archive embeds `SmileIDSDK.framework` and `Lottie.framework`)
