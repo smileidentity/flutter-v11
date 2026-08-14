@@ -2,6 +2,10 @@
 
 ### Unreleased
 
+### Changed
+* Bump Android SDK to [v11.2.1](https://github.com/smileidentity/android-v11/releases/tag/v11.2.1)
+* Bump iOS SDK to [v11.2.1](https://github.com/smileidentity/ios/releases/tag/v11.2.1)
+
 ### Added
 * Added Swift Package Manager support for iOS. Apps on Flutter 3.44 or newer now integrate the
   SDK through Swift Package Manager by default, with no changes required on your side.

@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "FlutterFramework", path: "../FlutterFramework"),
-        .package(url: "https://github.com/smileidentity/ios.git", exact: "11.2.0")
+        .package(url: "https://github.com/smileidentity/ios.git", exact: "11.2.1")
     ],
     targets: [
         .target(
