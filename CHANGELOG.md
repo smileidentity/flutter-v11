@@ -1,6 +1,13 @@
 # Release Notes
 
-### Unreleased
+### 11.2.12 - August 14, 2026
+
+### Changed
+* Bump Android SDK to [v11.2.1](https://github.com/smileidentity/android-v11/releases/tag/v11.2.1)
+* Bump iOS SDK to [v11.2.1](https://github.com/smileidentity/ios/releases/tag/v11.2.1)
+* Apps using `sentry_flutter` can now build with Swift Package Manager. The native iOS SDK no
+  longer declares the dependencies that clashed with it, so the two resolve together and the
+  CocoaPods workaround is no longer needed.
 
 ### Added
 * Added Swift Package Manager support for iOS. Apps on Flutter 3.44 or newer now integrate the
