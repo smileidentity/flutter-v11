@@ -22,11 +22,13 @@ jobs:
       - name: Flutter action
         uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
-          # Pinned to match build.yaml. Floating on stable published 11.2.12 fine and then
-          # broke 11.2.13: the stable of the day shipped a flutter_tools whose own
-          # `test 1.31.1` constraint no longer resolves, so `pub get` failed before the
-          # publish. A release must not depend on which stable happens to be current.
-          flutter-version: '3.32.0'
+          # The version that last published successfully: 11.2.12 went out on stable-3.47.0.
+          # Do NOT set this to build.yaml's 3.32.0 — that is the build pin and has never
+          # published; its flutter_tools cannot resolve its own `test 1.25.15`. Floating on
+          # stable broke too, because the current stable's flutter_tools wants `test 1.31.1`.
+          # `flutter pub publish` runs `pub get` on flutter_tools before touching the package,
+          # so a Flutter whose own tooling will not resolve fails the release outright.
+          flutter-version: '3.47.0'
           channel: 'stable'
       - name: Read pubspec version
         id: version
