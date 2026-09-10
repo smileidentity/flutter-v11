@@ -1,5 +1,11 @@
 # Release Notes
 
+### 11.2.13 - September 10, 2026
+
+### Changed
+* Bump Android SDK to [v11.2.2](https://github.com/smileidentity/android-v11/releases/tag/v11.2.2)
+* Bump iOS SDK to [v11.2.2](https://github.com/smileidentity/ios/releases/tag/v11.2.2)
+
 ### 11.2.12 - August 14, 2026
 
 ### Changed
