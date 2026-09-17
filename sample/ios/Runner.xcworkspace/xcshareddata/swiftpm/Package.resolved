@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/smileidentity/ios.git",
       "state" : {
-        "revision" : "05091528fa7f9587565c55ada2c493606c29ed1b",
-        "version" : "11.2.2"
+        "revision" : "9bca7d6f7b04e1ca9196efd70f3ea2fe47c2b255",
+        "version" : "11.2.3"
       }
     },
     {
