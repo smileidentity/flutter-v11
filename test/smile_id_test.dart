@@ -85,4 +85,86 @@ void main() {
     SmileID.api.doEnhancedKycAsync(request);
     verify(SmileID.api.platformInterface.doEnhancedKycAsync(request));
   });
+  for (final int count in [7, 6]) {
+    test("doSmartSelfieEnrollment forwards $count liveness images unchanged",
+        () async {
+      final List<String> livenessImages =
+          List.generate(count, (int index) => "liveness_$index");
+      when(SmileID.api.platformInterface.doSmartSelfieEnrollment(
+              "signature",
+              "timestamp",
+              "selfie",
+              livenessImages,
+              "user",
+              null,
+              null,
+              null,
+              null))
+          .thenAnswer((_) async => FlutterSmartSelfieResponse(
+              code: "0",
+              createdAt: "now",
+              jobId: "job",
+              jobType: FlutterJobTypeV2.smartSelfieEnrollment,
+              message: "ok",
+              partnerId: "p",
+              partnerParams: FlutterPartnerParams(jobId: "job", userId: "user"),
+              status: FlutterSmartSelfieStatus.approved,
+              updatedAt: "now",
+              userId: "user"));
+
+      await SmileID.api.doSmartSelfieEnrollment("signature", "timestamp",
+          "selfie", livenessImages, "user", null, null, null, null);
+
+      verify(SmileID.api.platformInterface.doSmartSelfieEnrollment(
+          "signature",
+          "timestamp",
+          "selfie",
+          livenessImages,
+          "user",
+          null,
+          null,
+          null,
+          null));
+    });
+
+    test(
+        "doSmartSelfieAuthentication forwards $count liveness images unchanged",
+        () async {
+      final List<String> livenessImages =
+          List.generate(count, (int index) => "liveness_$index");
+      when(SmileID.api.platformInterface.doSmartSelfieAuthentication(
+              "signature",
+              "timestamp",
+              "selfie",
+              livenessImages,
+              "user",
+              null,
+              null,
+              null))
+          .thenAnswer((_) async => FlutterSmartSelfieResponse(
+              code: "0",
+              createdAt: "now",
+              jobId: "job",
+              jobType: FlutterJobTypeV2.smartSelfieAuthentication,
+              message: "ok",
+              partnerId: "p",
+              partnerParams: FlutterPartnerParams(jobId: "job", userId: "user"),
+              status: FlutterSmartSelfieStatus.approved,
+              updatedAt: "now",
+              userId: "user"));
+
+      await SmileID.api.doSmartSelfieAuthentication("signature", "timestamp",
+          "selfie", livenessImages, "user", null, null, null);
+
+      verify(SmileID.api.platformInterface.doSmartSelfieAuthentication(
+          "signature",
+          "timestamp",
+          "selfie",
+          livenessImages,
+          "user",
+          null,
+          null,
+          null));
+    });
+  }
 }

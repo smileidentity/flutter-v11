@@ -1,5 +1,10 @@
 # Release Notes
 
+### Unreleased
+
+### Fixed
+* Fixed the Android SmartSelfie capture view occasionally submitting or delivering its result more than once.
+
 ### 11.2.14 - September 17, 2026
 
 ### Changed
